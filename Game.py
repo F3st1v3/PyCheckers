@@ -7,6 +7,7 @@ Description: Simulates checkers
 
 # Importing pygame
 import pygame
+from pygame import display
 
 from ButtonClass import *
 
@@ -33,6 +34,7 @@ display_surface = pygame.display.set_mode((x, y))
 # Loading images
 
 playImg = pygame.image.load("Resources/playImg.png").convert_alpha()
+playImgHover = pygame.image.load("Resources/playImgHover.png").convert_alpha()
 '''
 optionsImg = pygame.image.load("options.png").convert_alpha()
 backImg = pygame.image.load("back.png").convert_alpha()
@@ -42,6 +44,7 @@ multiIMg = pygame.image.load("multi.png").convert_alpha()
 
 # Creating button instances
 playButton = Button(x / 2, y / 2, playImg, 1)
+playButtonHover = Button(x / 2, y / 2, playImgHover, 1)
 
 # Setting the pygame window name
 pygame.display.set_caption("Checkers")
@@ -69,6 +72,12 @@ def menu():
     if playButton.draw(display_surface):
         # Event
         pass
+    
+    if playButton.hover():
+        
+        print("Hovering")
+        
+    
 
     # Updating the screen
     pygame.display.flip()
