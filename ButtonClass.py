@@ -2,8 +2,8 @@
 This code is NOT mine, and is posted at
 https://github.com/russs123/pygame_tutorials/blob/main/Button/button.py
 It's included here because I'm using the class, similarly to how one
-uses a module. All credit for the code goes to the developer.
-I have only modified a few things to better fit my needs.
+uses a module. All credit for the idea, some of the code, and the structure
+goes to the developer. I have only modified a few things to better fit my needs.
 '''
 
 import pygame
