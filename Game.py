@@ -37,8 +37,6 @@ playImgHover = pygame.image.load("Resources/playImgHover.png").convert_alpha()
 '''
 optionsImg = pygame.image.load("options.png").convert_alpha()
 backImg = pygame.image.load("back.png").convert_alpha()
-singleImg = pygame.image.load("single.png").convert_alpha()
-multiIMg = pygame.image.load("multi.png").convert_alpha()
 '''
 
 # Creating button instances
@@ -62,6 +60,7 @@ imgRect.center = (x // 2, y // 4)
 
 
 def menu():
+
     # Making the background white
     display_surface.fill(ORANGE)
 
@@ -71,10 +70,14 @@ def menu():
     if playButton.draw(display_surface):
         # Event
         pass
-    
-    if playButton.hover():
         
+    if playButton.hover():
+
+        playButton.erase(display_surface, ORANGE)
+
         playButtonHover.draw(display_surface)
+
+        pygame.display.update(playButton)
         
     
 
