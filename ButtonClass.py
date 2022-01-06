@@ -14,7 +14,7 @@ class Button:
         height = image.get_height()
         self.image = pygame.transform.scale(image, (int(width * scale), int(height * scale)))
         self.rect = self.image.get_rect()
-        self.rect.topleft = (x, y)
+        self.rect.center = (x, y)
         self.clicked = False
 
     def draw(self, surface):
@@ -43,7 +43,7 @@ class Button:
         # Draw button
         surface.blit(self.image, (self.rect.x, self.rect.y))
 
-        return [action]
+        return action
 
     def hover(self):
             
@@ -56,7 +56,7 @@ class Button:
             
             hover = True
         
-        return [hover]
+        return hover
 
 
 

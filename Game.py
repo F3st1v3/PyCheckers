@@ -7,7 +7,6 @@ Description: Simulates checkers
 
 # Importing pygame
 import pygame
-from pygame import display
 
 from ButtonClass import *
 
@@ -75,7 +74,7 @@ def menu():
     
     if playButton.hover():
         
-        print("Hovering")
+        playButtonHover.draw(display_surface)
         
     
 
