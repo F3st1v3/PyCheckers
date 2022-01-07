@@ -36,14 +36,15 @@ display_surface = pygame.display.set_mode((x, y))
 
 playImg = pygame.image.load("Resources/playImg.png").convert_alpha()
 playImgHover = pygame.image.load("Resources/playImgHover2.jpg").convert_alpha()
+boardImg = pygame.image.load("Resources/board.png").convert_alpha()
 '''
 optionsImg = pygame.image.load("options.png").convert_alpha()
 backImg = pygame.image.load("back.png").convert_alpha()
 '''
 
 # Creating button instances
-playButton = Button(x / 2, y / 2, playImg, 0.3)
-playButtonHover = Button(x / 2, y / 2, playImgHover, 0.4)
+playButton = Button(x / 2, y / 2, playImg, 0.4)
+playButtonHover = Button(x / 2, y / 2, playImgHover, 0.5)
 
 # Setting the pygame window name
 pygame.display.set_caption("Checkers")
@@ -60,6 +61,13 @@ imgRect = img.get_rect()
 # Setting the center of imgRect
 imgRect.center = (x // 2, y // 4)
 
+scene = "menu"
+
+def game():
+
+    display_surface.fill(ORANGE)
+
+    display_surface.blit(boardImg, (100, 0))
 
 def menu():
 
@@ -70,8 +78,9 @@ def menu():
     display_surface.blit(img, imgRect)
 
     if playButton.draw(display_surface):
-        print("Clicked")
-        pass
+        
+        global scene
+        scene = "game"
         
     if playButton.hover():
 
@@ -97,9 +106,10 @@ while True:
 
     clock.tick(30)
 
-
-
-    menu()
+    if scene == "menu":
+        menu()
+    elif scene == "game":
+        game()
 
     # Stopping the program if pygame.event.get() returns pygame.QUIT
     for event in pygame.event.get():
