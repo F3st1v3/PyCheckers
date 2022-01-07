@@ -22,7 +22,7 @@ PINK = (255, 133, 133)
 ORANGE = (255, 178, 102)
 
 # Defining x as 640
-x = 600
+x = 800
 
 # Defining y as 480
 y = 600
@@ -30,18 +30,20 @@ y = 600
 # Defining display_surface as the display surface object of the dimensions x, y
 display_surface = pygame.display.set_mode((x, y))
 
+
+
 # Loading images
 
 playImg = pygame.image.load("Resources/playImg.png").convert_alpha()
-playImgHover = pygame.image.load("Resources/playImgHover.png").convert_alpha()
+playImgHover = pygame.image.load("Resources/playImgHover2.jpg").convert_alpha()
 '''
 optionsImg = pygame.image.load("options.png").convert_alpha()
 backImg = pygame.image.load("back.png").convert_alpha()
 '''
 
 # Creating button instances
-playButton = Button(x / 2, y / 2, playImg, 1)
-playButtonHover = Button(x / 2, y / 2, playImgHover, 1)
+playButton = Button(x / 2, y / 2, playImg, 0.3)
+playButtonHover = Button(x / 2, y / 2, playImgHover, 0.4)
 
 # Setting the pygame window name
 pygame.display.set_caption("Checkers")
@@ -68,7 +70,7 @@ def menu():
     display_surface.blit(img, imgRect)
 
     if playButton.draw(display_surface):
-        # Event
+        print("Clicked")
         pass
         
     if playButton.hover():
@@ -84,6 +86,7 @@ def menu():
     # Updating the screen
     pygame.display.flip()
 
+clock = pygame.time.Clock()
 
 def selection():
     return 0
@@ -91,6 +94,10 @@ def selection():
 
 # Starting an infinite loop
 while True:
+
+    clock.tick(30)
+
+
 
     menu()
 
