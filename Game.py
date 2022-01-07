@@ -37,6 +37,7 @@ display_surface = pygame.display.set_mode((x, y))
 playImg = pygame.image.load("Resources/playImg.png").convert_alpha()
 playImgHover = pygame.image.load("Resources/playImgHover2.jpg").convert_alpha()
 boardImg = pygame.image.load("Resources/board.png").convert_alpha()
+
 '''
 optionsImg = pygame.image.load("options.png").convert_alpha()
 backImg = pygame.image.load("back.png").convert_alpha()
@@ -78,7 +79,7 @@ def menu():
     display_surface.blit(img, imgRect)
 
     if playButton.draw(display_surface):
-        
+
         global scene
         scene = "game"
         
