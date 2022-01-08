@@ -19,19 +19,42 @@ squarePixels = [75, 150, 225, 300, 375, 450, 525, 600]
 
 display_surface.fill(ORANGE)
 
-spaceIndex = []
-spaceCoords = []
-
 for j in range(4):
     for i in range(4):
         pygame.draw.rect(display_surface, BROWN, (150 * i, 150 * j, 75, 75))
-        spaceCoords.append([])
     for i in range(4):
         pygame.draw.rect(display_surface, BROWN, (i * 150 + 75, 150 * j + 75, 75, 75))  
     for i in range(4):
         pygame.draw.rect(display_surface, PEACH, (i * 150 + 75, 150 * j, 75, 75))
     for i in range(4):
         pygame.draw.rect(display_surface, PEACH, (i * 150, j * 150 + 75, 75, 75))
+
+spaceIndex = []
+spaceCoords = []
+
+for i in range(1, 9):
+    spaceCoords.append([76 * i - 38+ 104, 38 + 76 + 76 + 76 + 76 + 76 + 76 + 76])
+for i in range(1, 9):
+    spaceCoords.append([76 * i - 38+ 104, 38 + 76 + 76 + 76 + 76 + 76 + 76])
+for i in range(1, 9):
+    spaceCoords.append([76 * i - 38+ 104, 38 + 76 + 76 + 76 + 76 + 76])
+for i in range(1, 9):
+    spaceCoords.append([76 * i - 38+ 104, 38 + 76 + 76 + 76 + 76])
+for i in range(1, 9):
+    spaceCoords.append([76 * i - 38+ 104, 38 + 76 + 76 + 76])
+for i in range(1, 9):
+    spaceCoords.append([76 * i - 38+ 104, 38 + 76 + 76])
+for i in range(1, 9):
+    spaceCoords.append([76 * i - 38+ 104, 38 + 76])
+for i in range(1, 9): 
+    spaceCoords.append([76 * i - 38 + 104, 38])
+
+for i in range(64):
+    spaceIndex.append(i)
+
+myDictionary = dict(zip(spaceIndex, spaceCoords))
+
+print(myDictionary)
 
 
 while True:
