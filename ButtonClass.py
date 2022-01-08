@@ -10,7 +10,7 @@ import pygame
 from pygame import display
 
 class Button:
-    def __init__(self, x, y, image, scale):
+    def __init__(self, x, y, image, scale, kingImage=False):
         
         width = image.get_width()
         height = image.get_height()
@@ -19,6 +19,10 @@ class Button:
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.clicked = False
+        self.king = False
+        if kingImage != False:
+
+            self.kingImage = kingImage
 
     def draw(self, surface):
         
@@ -83,11 +87,32 @@ class Button:
 
         self.draw(surface)
 
+    def kingCheck(self):
 
+        if self.king == True:
+            
+            self.image = self.kingImage
+            
+    def click(self):
 
+        action = False
+        #hover = False
 
+        # Getting the mouse position
+        pos = pygame.mouse.get_pos()
 
+        # Check if the mouse is hovering over or clicking the button
+        if self.rect.collidepoint(pos):
+            #hover = True
+            
+            if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
+                self.clicked = True
+                action = True
+            
+
+            if pygame.mouse.get_pressed()[0] == 0:
+                self.clicked = False
         
-
-
+        return action
+        
 

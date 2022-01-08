@@ -177,11 +177,13 @@ def menu():
     # Displaying img on the screen
     display_surface.blit(img, imgRect)
 
-    if playButton.draw(display_surface):
+    playButton.draw(display_surface)
 
+    if playButtonHover.click():
+        
         global scene
         scene = "game"
-        
+
     if playButton.hover():
 
         playButton.erase(display_surface, ORANGE)
