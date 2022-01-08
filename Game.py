@@ -22,10 +22,10 @@ PINK = (255, 133, 133)
 ORANGE = (255, 178, 102)
 
 # Defining x as 640
-x = 800
+x = 808
 
 # Defining y as 480
-y = 600
+y = 608
 
 # Defining display_surface as the display surface object of the dimensions x, y
 display_surface = pygame.display.set_mode((x, y))
@@ -37,6 +37,9 @@ display_surface = pygame.display.set_mode((x, y))
 playImg = pygame.image.load("Resources/playImg.png").convert_alpha()
 playImgHover = pygame.image.load("Resources/playImgHover2.jpg").convert_alpha()
 boardImg = pygame.image.load("Resources/board.png").convert_alpha()
+blackPieceImg = pygame.image.load("Resources/blackPiece.png").convert_alpha()
+whitePieceImg = pygame.image.load("Resources/whitePiece.png").convert_alpha()
+
 
 '''
 optionsImg = pygame.image.load("options.png").convert_alpha()
@@ -63,12 +66,16 @@ imgRect = img.get_rect()
 imgRect.center = (x // 2, y // 4)
 
 scene = "menu"
+spaces = {}
+
 
 def game():
 
     display_surface.fill(ORANGE)
 
-    display_surface.blit(boardImg, (100, 0))
+    display_surface.blit(boardImg, (104, 0))
+
+    
 
 def menu():
 

@@ -19,9 +19,13 @@ squarePixels = [75, 150, 225, 300, 375, 450, 525, 600]
 
 display_surface.fill(ORANGE)
 
+spaceIndex = []
+spaceCoords = []
+
 for j in range(4):
     for i in range(4):
         pygame.draw.rect(display_surface, BROWN, (150 * i, 150 * j, 75, 75))
+        spaceCoords.append([])
     for i in range(4):
         pygame.draw.rect(display_surface, BROWN, (i * 150 + 75, 150 * j + 75, 75, 75))  
     for i in range(4):

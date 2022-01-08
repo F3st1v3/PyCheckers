@@ -1,4 +1,11 @@
-class piece:
-    def __init__(self, x, y, image, colour):
+import pygame
 
-        self.image = 
+class piece:
+    def __init__(self, image):
+
+        
+        self.image = image
+        self.rect = image.get_rect()
+
+
+

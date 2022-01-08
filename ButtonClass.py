@@ -75,8 +75,19 @@ class Button:
 
         pygame.draw.rect(surface, colour, tempRect)
         
-    
+    def move(self, surface, colour, newPos):
 
+        self.erase(surface, colour)
+
+        self.rect.move(newPos)
+
+        self.draw(surface)
+
+
+
+
+
+        
 
 
 
