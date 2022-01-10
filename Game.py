@@ -6,6 +6,7 @@ Description: Simulates checkers
 '''
 
 # Importing pygame
+from typing import Type
 import pygame
 
 # Importing ButtonClass.py
@@ -36,7 +37,9 @@ playImg = pygame.image.load("Resources/playImg.png").convert_alpha()
 playImgHover = pygame.image.load("Resources/playImgHover2.jpg").convert_alpha()
 boardImg = pygame.image.load("Resources/board.png").convert_alpha()
 blackPieceImg = pygame.image.load("Resources/blackPiece.png").convert_alpha()
+blackPieceSelectImg = pygame.image.load("Resources/blackPieceSelect.jpg").convert_alpha()
 whitePieceImg = pygame.image.load("Resources/whitePiece.png").convert_alpha()
+
 '''
 optionsImg = pygame.image.load("options.png").convert_alpha()
 backImg = pygame.image.load("back.png").convert_alpha()
@@ -76,19 +79,22 @@ def setupPieces():
 
     # Setting j (counter) to 0
     j = 0
+    piece = 0
 
     # Creating black pieces for row 1
     for i in range(0, 8, 2):
-        
-        blackPiece.append(Button(spaces[i][0], spaces[i][1], blackPieceImg, 1))
+        piece += 1
+        blackPiece.append(Button(spaces[i][0], spaces[i][1], blackPieceImg, 1, False, "blackPiece{0}".format(piece)))
         j += 1
+        
     
     # Resetting the counter
     j = 0
 
     # Creating black pieces for row 2
     for i in range(9, 17, 2):
-        blackPiece.append(Button(spaces[i][0], spaces[i][1], blackPieceImg, 1))
+        piece += 1
+        blackPiece.append(Button(spaces[i][0], spaces[i][1], blackPieceImg, 1, False, "blackPiece{0}".format(piece)))
         j += 1
 
     # Resetting the counter
@@ -96,7 +102,8 @@ def setupPieces():
 
     # Creating black pieces for row 3
     for i in range(16, 24, 2):
-        blackPiece.append(Button(spaces[i][0], spaces[i][1], blackPieceImg, 1))
+        piece += 1
+        blackPiece.append(Button(spaces[i][0], spaces[i][1], blackPieceImg, 1, False, "blackPiece{0}".format(piece)))
         j += 1
 
     # Declaring whitePiece as a list
@@ -105,10 +112,12 @@ def setupPieces():
 
     # Resetting the counter
     j = 0
+    piece = 0
 
     # Creating white pieces for row 6
     for i in range(41, 48, 2):
-        whitePiece.append(Button(spaces[i][0], spaces[i][1], whitePieceImg, 1))
+        piece += 1
+        whitePiece.append(Button(spaces[i][0], spaces[i][1], whitePieceImg, 1, False, "whitePiece{0}".format(piece)))
         j += 1
     
     # Resetting the counter
@@ -116,13 +125,15 @@ def setupPieces():
 
     # Creating white pieces for row 7
     for i in range(48, 56, 2):
-        whitePiece.append(Button(spaces[i][0], spaces[i][1], whitePieceImg, 1))
+        piece += 1
+        whitePiece.append(Button(spaces[i][0], spaces[i][1], whitePieceImg, 1, False, "whitePiece{0}".format(piece)))
         j += 1
 
     j = 0
 
     for i in range(57, 64, 2):
-        whitePiece.append(Button(spaces[i][0], spaces[i][1], whitePieceImg, 1))
+        piece += 1
+        whitePiece.append(Button(spaces[i][0], spaces[i][1], whitePieceImg, 1, False, "whitePiece{0}".format(piece)))
         j += 1
 
     for i in range(12):
@@ -155,10 +166,54 @@ def game():
 
     global turn
 
+    blackPieceKeys = []
+    blackPieceVals = []
+    blackPieceDict = {}
+
     if turn == True:
+        
+        blackPieceClickKeys = list(map(lambda x: x.click()[1], blackPiece.values()))
+        blackPieceClickValues = list(map(lambda x: x.click()[0], blackPiece.values()))
+
+        blackPieceDict = dict(zip(blackPieceClickKeys, blackPieceClickValues))
+
+        for key, value in blackPieceDict.copy().items():
+
+            if value != True:
+                
+                del blackPieceDict[key]
+        
+
+
+        print(blackPieceDict)
+        
+        if blackPieceDict:
+
+            print(blackPieceDict)
+            # globals()[blackPieceClickKeys[0]].select(blackPieceSelectImg)
+            pass
+
+            
+
+        '''
+        for key, value in blackPiece.items():
 
         
 
+            if value.click():
+
+                blackPieceKeys.append(key)
+                blackPieceVals.append(value)
+                blackPieceDict = dict(zip(blackPieceKeys, blackPieceVals))
+        
+        if blackPieceDict:
+            for key, value in blackPieceDict.items():
+
+                value.image = blackPieceSelectImg
+                #What happens when a piece is clicked
+        
+                pass'''
+        
         # Ends the turn
         turn = False
 
@@ -179,10 +234,11 @@ def menu():
 
     playButton.draw(display_surface)
 
-    if playButtonHover.click():
+    if playButtonHover.click()[0] == True:
         
         global scene
         scene = "game"
+
 
     if playButton.hover():
 

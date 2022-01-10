@@ -6,11 +6,16 @@ uses a module. All credit for the idea, some of the code, and the structure
 goes to the developer. I have only modified a few things to better fit my needs.
 '''
 
+from os import name
 import pygame
 from pygame import display
+import random
+# random.seed()
+
+
 
 class Button:
-    def __init__(self, x, y, image, scale, kingImage=False):
+    def __init__(self, x, y, image, scale, kingImage=False, name="None"):
         
         width = image.get_width()
         height = image.get_height()
@@ -20,6 +25,7 @@ class Button:
         self.rect.center = (x, y)
         self.clicked = False
         self.king = False
+        self.name = name
         if kingImage != False:
 
             self.kingImage = kingImage
@@ -98,6 +104,8 @@ class Button:
         action = False
         #hover = False
 
+        name = self.name
+
         # Getting the mouse position
         pos = pygame.mouse.get_pos()
 
@@ -112,7 +120,9 @@ class Button:
 
             if pygame.mouse.get_pressed()[0] == 0:
                 self.clicked = False
+            
+        return [action, name]
         
-        return action
-        
+    def select(self, image):
 
+        self.image = image
