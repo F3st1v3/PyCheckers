@@ -9,8 +9,6 @@ goes to the developer. I have only modified a few things to better fit my needs.
 from os import name
 import pygame
 from pygame import display
-import random
-# random.seed()
 
 
 
@@ -26,38 +24,17 @@ class Button:
         self.clicked = False
         self.king = False
         self.name = name
+        self.selected = False
+        self.oldimage = False
         if kingImage != False:
 
             self.kingImage = kingImage
 
     def draw(self, surface):
         
-            action = False
-            #hover = False
-
-            # Getting the mouse position
-            pos = pygame.mouse.get_pos()
-
-            # Check if the mouse is hovering over or clicking the button
-            if self.rect.collidepoint(pos):
-                #hover = True
-            
-                if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
-                    self.clicked = True
-                    action = True
-            
-
-            if pygame.mouse.get_pressed()[0] == 0:
-                self.clicked = False
-
-            #if not self.rect.collidepoint(pos):
-                #hover = False
-        
-
+           
             # Draw button
             surface.blit(self.image, (self.rect.x, self.rect.y))
-
-            return action
 
     def hover(self):
 
@@ -123,6 +100,27 @@ class Button:
             
         return [action, name]
         
-    def select(self, image):
+    def select(self, image, list):
 
+        self.oldimage = self.image
         self.image = image
+        self.selected = True
+        
+        list.append(self.name)
+    
+    def unselect(self, list):
+
+        self.image = self.oldimage
+        self.selected = False
+
+        list.clear()
+
+    def is_collide(self, x, y):
+
+        if self.rect.collidepoint((x, y)) == True:
+
+            return [True, self.name]
+
+        else: 
+            
+            return [False, self.name]

@@ -1,5 +1,15 @@
 import pygame
 
+class a:
+
+    def __init__(self):
+        pass
+    def pos(self, x, y):
+
+        print((x, y))
+
+myObj = a()
+
 pygame.init()
 
 BROWN = (153, 76, 0)
@@ -58,6 +68,10 @@ print(myDictionary)
 
 
 while True:
+
+    pos = pygame.mouse.get_pos()
+
+    myObj.pos(pos[0], pos[1])
 
     for event in pygame.event.get():
 
