@@ -8,13 +8,14 @@ Description: Simulates checkers
 # Importing pygame
 from typing import Type
 import pygame
+from pygame.constants import MOUSEBUTTONDOWN
 
 # Importing ButtonClass.py
 from ButtonClass import *
 
 from copy import deepcopy
 
-import time
+import numpy as np
 
 # Initializing pygame
 pygame.init()
@@ -157,6 +158,15 @@ blackPieceClickValues = list(map(lambda x: x.click()[0], blackPiece.values()))
 blackPieceDict = dict(zip(blackPieceClickKeys, blackPieceClickValues))
 selectedList = []
 
+def closest_node(node, nodes):
+    
+    nodes = tuple(nodes)
+
+    nodes = np.asarray(nodes)
+    deltas = nodes - node
+    dist_2 = np.einsum('ij,ij->i', deltas, deltas)
+    return np.argmin(dist_2)
+
 def game():
 
     display_surface.fill(ORANGE)
@@ -200,7 +210,18 @@ def game():
                                 blackPiece[selectedList[0]].unselect(selectedList)
 
                             blackPiece[key].select(blackPieceSelectImg, selectedList)
+        
+        if event.type == pygame.MOUSEBUTTONDOWN:            
+                    
+                    if selectedList:
 
+                        closestSquareCoord = closest_node(pos, list(spaces.values()))
+
+                        closestSquare = [k for k, v in spaces.items() if v == spaces[closestSquareCoord]][0]
+
+                        print(closestSquare)
+
+                        blackPiece[selectedList[0]].checkerMove(closestSquare, spaces, display_surface)
         pass
 
     else:

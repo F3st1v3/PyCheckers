@@ -10,8 +10,6 @@ from os import name
 import pygame
 from pygame import display
 
-
-
 class Button:
     def __init__(self, x, y, image, scale, kingImage=False, name="None"):
         
@@ -62,11 +60,11 @@ class Button:
 
         pygame.draw.rect(surface, colour, tempRect)
         
-    def move(self, surface, colour, newPos):
+    def move(self, surface, colour, x, y):
 
         self.erase(surface, colour)
 
-        self.rect.move(newPos)
+        self.rect.center = (x, y)
 
         self.draw(surface)
 
@@ -124,3 +122,15 @@ class Button:
         else: 
             
             return [False, self.name]
+    
+    def checkerMove(self, square, dict, surface):
+
+        if square % 2 == 0:
+
+            colour = (153, 76, 0)
+        
+        elif square % 2 == 1:
+
+            colour = (225, 148, 72)
+
+        self.move(surface, colour, dict[square][0], dict[square][1])
