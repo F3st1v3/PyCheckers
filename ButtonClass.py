@@ -11,7 +11,7 @@ import pygame
 from pygame import display
 
 class Button:
-    def __init__(self, x, y, image, scale, kingImage=False, name="None"):
+    def __init__(self, x, y, image, scale, kingImage=False, name="None", checkerPiece=False):
         
         width = image.get_width()
         height = image.get_height()
@@ -24,6 +24,8 @@ class Button:
         self.name = name
         self.selected = False
         self.oldimage = False
+        self.oldrectcenter = False
+        self.checkerPiece = checkerPiece
         if kingImage != False:
 
             self.kingImage = kingImage
@@ -63,6 +65,8 @@ class Button:
     def move(self, surface, colour, x, y):
 
         self.erase(surface, colour)
+
+        self.oldrectcenter = self.rect.center
 
         self.rect.center = (x, y)
 
@@ -134,3 +138,11 @@ class Button:
             colour = (225, 148, 72)
 
         self.move(surface, colour, dict[square][0], dict[square][1])
+
+        if self.rect.center == self.oldrectcenter:
+
+            return False
+
+        else:
+            
+            return True

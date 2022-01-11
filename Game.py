@@ -17,6 +17,8 @@ from copy import deepcopy
 
 import numpy as np
 
+import time
+
 # Initializing pygame
 pygame.init()
 
@@ -87,7 +89,7 @@ def setupPieces():
 
     # Creating black pieces for row 1
     for i in range(0, 8, 2):
-        blackPiece.append(Button(spaces[i][0], spaces[i][1], blackPieceImg, 1, False, "blackPiece{0}".format(piece)))
+        blackPiece.append(Button(spaces[i][0], spaces[i][1], blackPieceImg, 1, False, "blackPiece{0}".format(piece), True))
         j += 1
         piece += 1
         
@@ -97,7 +99,7 @@ def setupPieces():
 
     # Creating black pieces for row 2
     for i in range(9, 17, 2):
-        blackPiece.append(Button(spaces[i][0], spaces[i][1], blackPieceImg, 1, False, "blackPiece{0}".format(piece)))
+        blackPiece.append(Button(spaces[i][0], spaces[i][1], blackPieceImg, 1, False, "blackPiece{0}".format(piece), True))
         j += 1
         piece += 1
 
@@ -106,7 +108,7 @@ def setupPieces():
 
     # Creating black pieces for row 3
     for i in range(16, 24, 2):
-        blackPiece.append(Button(spaces[i][0], spaces[i][1], blackPieceImg, 1, False, "blackPiece{0}".format(piece)))
+        blackPiece.append(Button(spaces[i][0], spaces[i][1], blackPieceImg, 1, False, "blackPiece{0}".format(piece), True))
         j += 1
         piece += 1
 
@@ -185,6 +187,8 @@ def game():
 
     if turn == True:
 
+        event = pygame.event.poll()
+
         if event.type == pygame.MOUSEBUTTONDOWN:
 
                     pos = pygame.mouse.get_pos()
@@ -221,13 +225,25 @@ def game():
 
                         print(closestSquare)
 
-                        blackPiece[selectedList[0]].checkerMove(closestSquare, spaces, display_surface)
-        pass
+                        if blackPiece[selectedList[0]].checkerMove(closestSquare, spaces, display_surface) == True:
+
+                            blackPiece[selectedList[0]].unselect(selectedList)
+
+                            turn = False
+                        
+                        else:
+
+                            print("False")
+
+        # pass
 
     else:
 
+        pygame.display.update()
+
         # Ends the turn
         turn = True
+        pass
 
         
 
