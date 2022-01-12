@@ -229,8 +229,6 @@ def game():
                     
                     if selectedList:
 
-                        blackPiece[selectedList[0]].checkerMoves()
-
                         closestSquareCoord = closest_node(pos, list(spaces.values()))
 
                         closestSquare = [k for k, v in spaces.items() if v == spaces[closestSquareCoord]][0]
@@ -247,6 +245,9 @@ def game():
 
                             pass
 
+        if selectedList:
+
+                        blackPiece[selectedList[0]].checkerMoves()
         # pass
 
     else:
