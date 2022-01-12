@@ -46,6 +46,7 @@ boardImg = pygame.image.load("Resources/board.png").convert_alpha()
 blackPieceImg = pygame.image.load("Resources/blackPiece.png").convert_alpha()
 blackPieceSelectImg = pygame.image.load("Resources/blackPieceSelect.jpg").convert_alpha()
 whitePieceImg = pygame.image.load("Resources/whitePiece.png").convert_alpha()
+highlightImg = pygame.image.load("Resources/highlight.jpg").convert_alpha()
 
 '''
 optionsImg = pygame.image.load("options.png").convert_alpha()
@@ -53,8 +54,8 @@ backImg = pygame.image.load("back.png").convert_alpha()
 '''
 
 # Creating button instances
-playButton = Button(x / 2, y / 2, playImg, 0.4)
-playButtonHover = Button(x / 2, y / 2, playImgHover, 0.5)
+playButton = Button(x / 2, y / 2, playImg, 0.4, display_surface)
+playButtonHover = Button(x / 2, y / 2, playImgHover, 0.5, display_surface)
 
 # Setting the pygame window name
 pygame.display.set_caption("Checkers")
@@ -86,31 +87,36 @@ def setupPieces():
     # Setting j (counter) to 0
     j = 0
     piece = 0
+    square = 0
 
     # Creating black pieces for row 1
     for i in range(0, 8, 2):
-        blackPiece.append(Button(spaces[i][0], spaces[i][1], blackPieceImg, 1, False, "blackPiece{0}".format(piece), True))
+        blackPiece.append(Button(spaces[i][0], spaces[i][1], blackPieceImg, 1, display_surface, highlightImg, False, "blackPiece{0}".format(piece), True, square, spaces))
         j += 1
         piece += 1
-        
+        square += 2
     
     # Resetting the counter
     j = 0
+    square += 1
 
     # Creating black pieces for row 2
     for i in range(9, 17, 2):
-        blackPiece.append(Button(spaces[i][0], spaces[i][1], blackPieceImg, 1, False, "blackPiece{0}".format(piece), True))
+        blackPiece.append(Button(spaces[i][0], spaces[i][1], blackPieceImg, 1,  display_surface, highlightImg, False, "blackPiece{0}".format(piece), True, square, spaces))
         j += 1
         piece += 1
+        square += 2
 
     # Resetting the counter
     j = 0
+    square -= 1
 
     # Creating black pieces for row 3
     for i in range(16, 24, 2):
-        blackPiece.append(Button(spaces[i][0], spaces[i][1], blackPieceImg, 1, False, "blackPiece{0}".format(piece), True))
+        blackPiece.append(Button(spaces[i][0], spaces[i][1], blackPieceImg, 1, display_surface, highlightImg, False, "blackPiece{0}".format(piece), True, square, spaces))
         j += 1
         piece += 1
+        square += 2
 
     # Declaring whitePiece as a list
     whitePiece = []
@@ -122,7 +128,7 @@ def setupPieces():
 
     # Creating white pieces for row 6
     for i in range(41, 48, 2):
-        whitePiece.append(Button(spaces[i][0], spaces[i][1], whitePieceImg, 1, False, "whitePiece{0}".format(piece)))
+        whitePiece.append(Button(spaces[i][0], spaces[i][1], whitePieceImg, 1, display_surface, None, False, "whitePiece{0}".format(piece)))
         j += 1
         piece += 1
     
@@ -131,14 +137,14 @@ def setupPieces():
 
     # Creating white pieces for row 7
     for i in range(48, 56, 2):
-        whitePiece.append(Button(spaces[i][0], spaces[i][1], whitePieceImg, 1, False, "whitePiece{0}".format(piece)))
+        whitePiece.append(Button(spaces[i][0], spaces[i][1], whitePieceImg, 1, display_surface, None, False, "whitePiece{0}".format(piece)))
         j += 1
         piece += 1
 
     j = 0
 
     for i in range(57, 64, 2):
-        whitePiece.append(Button(spaces[i][0], spaces[i][1], whitePieceImg, 1, False, "whitePiece{0}".format(piece)))
+        whitePiece.append(Button(spaces[i][0], spaces[i][1], whitePieceImg, 1, display_surface, None, False, "whitePiece{0}".format(piece)))
         j += 1
         piece += 1
 
@@ -148,6 +154,10 @@ def setupPieces():
 
     blackPieceDict = dict(zip(blackPieceIndex, blackPiece))
     whitePieceDict = dict(zip(whitePieceIndex, whitePiece))
+
+    for i in blackPiece:
+
+        print(i.seeSquare())
 
     return [blackPieceDict, whitePieceDict]
 
@@ -177,11 +187,11 @@ def game():
 
     for i in range(12):
         
-        blackPiece["blackPiece" + str(i)].draw(display_surface)
+        blackPiece["blackPiece" + str(i)].draw()
     
     for i in range(12):
 
-        whitePiece["whitePiece" + str(i)].draw(display_surface)
+        whitePiece["whitePiece" + str(i)].draw()
 
     global turn
 
@@ -219,13 +229,15 @@ def game():
                     
                     if selectedList:
 
+                        blackPiece[selectedList[0]].checkerMoves()
+
                         closestSquareCoord = closest_node(pos, list(spaces.values()))
 
                         closestSquare = [k for k, v in spaces.items() if v == spaces[closestSquareCoord]][0]
 
                         print(closestSquare)
 
-                        if blackPiece[selectedList[0]].checkerMove(closestSquare, spaces, display_surface) == True:
+                        if blackPiece[selectedList[0]].checkerMove(closestSquare, spaces) == True:
 
                             blackPiece[selectedList[0]].unselect(selectedList)
 
@@ -233,7 +245,7 @@ def game():
                         
                         else:
 
-                            print("False")
+                            pass
 
         # pass
 
@@ -255,7 +267,7 @@ def menu():
     # Displaying img on the screen
     display_surface.blit(img, imgRect)
 
-    playButton.draw(display_surface)
+    playButton.draw()
 
     if playButton.click()[0] == True:
         
@@ -265,9 +277,9 @@ def menu():
 
     if playButton.hover():
 
-        playButton.erase(display_surface, ORANGE)
+        playButton.erase(ORANGE)
 
-        playButtonHover.draw(display_surface)
+        playButtonHover.draw()
 
         pygame.display.update(playButton)
         

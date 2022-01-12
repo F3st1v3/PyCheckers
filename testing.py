@@ -1,9 +1,13 @@
-test = True
+class Button:
 
-if test == True:
+    def __init__(self, num):
 
-    test = False
+        self.num = num
+    
+    def seeSum(self):
 
-elif test == False:
+        return self.num
 
-    print("a")
+myButton = Button(5)
+
+print(myButton.seeSum())

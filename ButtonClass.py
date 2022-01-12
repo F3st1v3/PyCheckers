@@ -7,11 +7,13 @@ goes to the developer. I have only modified a few things to better fit my needs.
 '''
 
 from os import name
+from types import TracebackType
+from numpy import square
 import pygame
 from pygame import display
 
 class Button:
-    def __init__(self, x, y, image, scale, kingImage=False, name="None", checkerPiece=False):
+    def __init__(self, x, y, image, scale, surface, highlight = None, kingImage=False, name="None", checkerPiece=False, square=10, squareDict=False):
         
         width = image.get_width()
         height = image.get_height()
@@ -26,15 +28,19 @@ class Button:
         self.oldimage = False
         self.oldrectcenter = False
         self.checkerPiece = checkerPiece
+        self.square = square
+        self.surface = surface
+        self.highlight = highlight
+        self.squareDict = squareDict
         if kingImage != False:
 
             self.kingImage = kingImage
 
-    def draw(self, surface):
+    def draw(self):
         
            
             # Draw button
-            surface.blit(self.image, (self.rect.x, self.rect.y))
+            self.surface.blit(self.image, (self.rect.x, self.rect.y))
 
     def hover(self):
 
@@ -50,7 +56,7 @@ class Button:
         
             return hover
     
-    def erase(self, surface, colour):
+    def erase(self, colour):
 
         height = self.imageDimensions[1]
         width = self.imageDimensions[0]
@@ -60,17 +66,17 @@ class Button:
         
         tempRect.center = center
 
-        pygame.draw.rect(surface, colour, tempRect)
+        pygame.draw.rect(self.surface, colour, tempRect)
         
-    def move(self, surface, colour, x, y):
+    def move(self, colour, x, y):
 
-        self.erase(surface, colour)
+        self.erase(colour)
 
         self.oldrectcenter = self.rect.center
 
         self.rect.center = (x, y)
 
-        self.draw(surface)
+        self.draw()
 
     def kingCheck(self):
 
@@ -127,7 +133,7 @@ class Button:
             
             return [False, self.name]
     
-    def checkerMove(self, square, dict, surface):
+    def checkerMove(self, square, dict):
 
         if square % 2 == 0:
 
@@ -137,7 +143,7 @@ class Button:
 
             colour = (225, 148, 72)
 
-        self.move(surface, colour, dict[square][0], dict[square][1])
+        self.move(colour, dict[square][0], dict[square][1])
 
         if self.rect.center == self.oldrectcenter:
 
@@ -146,3 +152,43 @@ class Button:
         else:
             
             return True
+    
+    def checkerMoves(self):
+
+        if self.selected == True:
+
+            highlightRect = pygame.Rect(0, 0, 76, 76)
+
+            # If the square is on the left column
+            if (self.square + 8) % 8 == 0:
+                
+                highlightRect.center = self.squareDict[self.square + 9]
+
+                self.surface.blit(self.highlight, highlightRect)
+
+                print(f"Selected square {self.square + 9}")
+
+            # If the square is on the right column
+            elif (self.square + 1) % 8 == 0:
+                
+                highlightRect.center = self.squareDict[self.square + 7]
+
+                self.surface.blit(self.highlight, highlightRect)
+
+                print(f"Selected square {self.square + 7}")
+
+            else:
+                
+                highlightRect.center = self.squareDict[self.square + 9]
+
+                self.surface.blit(self.highlight, highlightRect)
+
+                highlightRect.center = self.squareDict[self.square + 7]
+
+                self.surface.blit(self.highlight, highlightRect)
+
+                print(f"Selected squares {self.square + 7} and {self.square + 9}")
+
+    def seeSquare(self):
+
+        return self.square
