@@ -145,6 +145,8 @@ class Button:
 
         self.move(colour, dict[square][0], dict[square][1])
 
+        self.square = square
+
         if self.rect.center == self.oldrectcenter:
 
             return False
