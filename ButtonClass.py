@@ -137,15 +137,29 @@ class Button:
 
         if square % 2 == 0:
 
-            colour = (153, 76, 0)
+            colour = (151, 77, 0)
         
         elif square % 2 == 1:
 
             colour = (225, 148, 72)
 
-        self.move(colour, dict[square][0], dict[square][1])
+        # self.move()
+        self.erase(colour)
+        self.oldrectcenter = self.rect.center
+        self.rect.center = self.oldrectcenter
+        self.draw()
 
-        self.square = square
+        print(self.surface.get_at((dict[square][0], dict[square][1]))[:3])
+
+        # self.move(colour, dict[square][0], dict[square][1])
+
+        if self.surface.get_at((dict[square][0], dict[square][1]))[:3] == (253, 231, 70):
+
+            self.move(colour, dict[square][0], dict[square][1])
+        
+            self.square = square
+
+        print(self.square)
 
         if self.rect.center == self.oldrectcenter:
 
@@ -168,7 +182,7 @@ class Button:
 
                 self.surface.blit(self.highlight, highlightRect)
 
-                print(f"Selected square {self.square + 9}")
+                # print(f"Selected square {self.square + 9}")
 
             # If the square is on the right column
             elif (self.square + 1) % 8 == 0:
@@ -177,7 +191,7 @@ class Button:
 
                 self.surface.blit(self.highlight, highlightRect)
 
-                print(f"Selected square {self.square + 7}")
+                # print(f"Selected square {self.square + 7}")
 
             else:
                 
@@ -189,7 +203,7 @@ class Button:
 
                 self.surface.blit(self.highlight, highlightRect)
 
-                print(f"Selected squares {self.square + 7} and {self.square + 9}")
+                #  print(f"Selected squares {self.square + 7} and {self.square + 9}")
 
     def seeSquare(self):
 

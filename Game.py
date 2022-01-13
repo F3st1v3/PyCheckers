@@ -25,10 +25,13 @@ pygame.init()
 # Defining the colours
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
-BROWN = (153, 76, 0)
+BROWN = (151, 77, 0)
 YELLOW = (255, 255, 0)
 PINK = (255, 133, 133)
 ORANGE = (255, 178, 102)
+ORANGE2 = (225, 148, 72)
+YELLOW2 = (253, 231, 70)
+
 
 # Defining x as 640
 x = 808
@@ -225,6 +228,10 @@ def game():
 
                             blackPiece[key].select(blackPieceSelectImg, selectedList)
         
+        if selectedList:
+
+                        blackPiece[selectedList[0]].checkerMoves()
+
         if event.type == pygame.MOUSEBUTTONDOWN:            
                     
                     if selectedList:
@@ -245,9 +252,6 @@ def game():
 
                             pass
 
-        if selectedList:
-
-                        blackPiece[selectedList[0]].checkerMoves()
         # pass
 
     else:
