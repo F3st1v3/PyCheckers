@@ -1,17 +1,13 @@
 '''
-This code is NOT mine, and is posted at
-https://github.com/russs123/pygame_tutorials/blob/main/Button/button.py
-It's included here because I'm using the class, similarly to how one
-uses a module. All credit for the idea, some of the code, and the structure
-goes to the developer. I have only modified a few things to better fit my needs.
+Author: F3st1v3
+Date: January 21 2022
+Program name: ButtonClass
+Description: A class for buttons used in the main program. I seperated the files to make it more clear.
 '''
-
-from os import name
-from types import TracebackType
-from numpy import square
+# Imports pygame (Needs to be imported to work properly)
 import pygame
-from pygame import display
 
+# Defines the Button class
 class Button:
     def __init__(self, x, y, image, scale, surface, highlight = None, kingImage=False, name="None", checkerPiece=False, square=10, squareDict=False):
         
