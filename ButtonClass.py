@@ -5,6 +5,7 @@ Program name: ButtonClass
 Description: A class for buttons used in the main program. I seperated the files to make it more clear.
 '''
 # Imports pygame (Needs to be imported to work properly)
+from re import A
 import pygame
 
 # Defines the Button class
@@ -128,7 +129,7 @@ class Button:
         else: 
             
             return [False, self.name]
-    
+
     def checkerMove(self, square, dict):
 
         if square % 2 == 0:
@@ -149,21 +150,23 @@ class Button:
 
         # self.move(colour, dict[square][0], dict[square][1])
 
-        if self.surface.get_at((dict[square][0], dict[square][1]))[:3] == (253, 231, 70):
+        if self.name[0] == "b" and self.surface.get_at((dict[square][0], dict[square][1]))[:3] == (253, 231, 70) or self.name[0] == "w":
 
             self.move(colour, dict[square][0], dict[square][1])
         
+            oldSquare = self.square
+
             self.square = square
 
         print(self.square)
 
         if self.rect.center == self.oldrectcenter:
 
-            return False
+            return [False]
 
         else:
             
-            return True
+            return [True, oldSquare]
     
     def checkerMoves(self):
 
@@ -237,6 +240,68 @@ class Button:
 
                         self.surface.blit(self.highlight, highlightRect)
 
+    def enemyMoves(self):
+
+        choices = []
+
+        if (self.square + 8) % 8 == 0:
+
+            if self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (253, 231, 70):
+
+                choices.append(self.square - 7)
+
+            elif self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (0, 0, 0):
+            
+                if self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (253, 231, 70):
+                    
+                    choices.append(self.square - 14)
+                
+            
+
+            pass
+
+        elif (self.square + 1) % 8 == 0:
+
+            if self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (253, 231, 70):
+
+                choices.append(self.square - 9)
+
+            elif self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (0, 0, 0):
+            
+                if self.surface.get_at((self.squareDict[self.square - 18][0], self.squareDict[self.square - 18][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 18][0], self.squareDict[self.square - 18][1]))[:3] == (253, 231, 70):
+                    
+                    choices.append(self.square - 18)
+
+            pass
+
+        else:
+
+            if self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (253, 231, 70):
+
+                choices.append(self.square - 7)
+
+            elif self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (0, 0, 0):
+            
+                if self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (253, 231, 70):
+                    
+                    choices.append(self.square - 14)
+            
+            if self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (253, 231, 70):
+
+                choices.append(self.square - 9)
+
+            elif self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (0, 0, 0):
+            
+                if self.surface.get_at((self.squareDict[self.square - 18][0], self.squareDict[self.square - 18][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 18][0], self.squareDict[self.square - 18][1]))[:3] == (253, 231, 70):
+                    
+                    choices.append(self.square - 18)
+
+        if not choices:
+
+            choices.append("None")
+
+        return [choices, self.name]
+
     def seeSquare(self):
 
-        return self.square
+        return [self.square, self.name]

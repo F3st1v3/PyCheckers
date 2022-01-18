@@ -10,6 +10,7 @@ import pygame
 from ButtonClass import *
 from copy import deepcopy
 import numpy as np
+import random
 
 # Initializing pygame
 pygame.init()
@@ -132,16 +133,16 @@ def setupPieces():
 
     # Creating white pieces for row 6
     for i in range(41, 48, 2):
-        whitePiece.append(Button(spaces[i][0], spaces[i][1], whitePieceImg, 1, display_surface, None, False, "whitePiece{0}".format(piece)))
+        whitePiece.append(Button(spaces[i][0], spaces[i][1], whitePieceImg, 1, display_surface, None, False, "whitePiece{0}".format(piece), True, i, spaces))
         j += 1
         piece += 1
-    
+
     # Resetting the counter
     j = 0
 
     # Creating white pieces for row 7
     for i in range(48, 56, 2):
-        whitePiece.append(Button(spaces[i][0], spaces[i][1], whitePieceImg, 1, display_surface, None, False, "whitePiece{0}".format(piece)))
+        whitePiece.append(Button(spaces[i][0], spaces[i][1], whitePieceImg, 1, display_surface, None, False, "whitePiece{0}".format(piece), True, i, spaces))
         j += 1
         piece += 1
 
@@ -150,7 +151,7 @@ def setupPieces():
 
     # Creating white pieces for row 8
     for i in range(57, 64, 2):
-        whitePiece.append(Button(spaces[i][0], spaces[i][1], whitePieceImg, 1, display_surface, None, False, "whitePiece{0}".format(piece)))
+        whitePiece.append(Button(spaces[i][0], spaces[i][1], whitePieceImg, 1, display_surface, None, False, "whitePiece{0}".format(piece), True, i, spaces))
         j += 1
         piece += 1
 
@@ -174,8 +175,15 @@ whitePiece = setupList[1]
 # Defining turn as True as the user starts first
 turn = True
 
+blackPieces = 12
+whitePieces = 12
+
 # Declaring selectedList as a list
 selectedList = []
+
+# Declaring possibleEnemyMoves as a list
+
+possibleEnemyMoves = []
 
 def closest_node(node, nodes):
     '''
@@ -190,14 +198,24 @@ def closest_node(node, nodes):
     dist_2 = np.einsum('ij,ij->i', deltas, deltas)
     return np.argmin(dist_2)
 
+def win():
+
+    print("You win!")
+
+def lose():
+
+    print("You lose!")
 
 def game():
     '''
     Runs the game scene
     '''
 
-    # Accesses the global variable turn
+    # Allows Access to the global variables
     global turn
+    global whitePieces
+    global blackPieces
+    global scene
 
     # Sets the background to orange
     display_surface.fill(ORANGE)
@@ -206,10 +224,13 @@ def game():
     display_surface.blit(boardImg, (104, 0))
 
     # Draws the pieces
-    for i in range(12):
+    for k, v in blackPiece.items():
+
+        v.draw()
         
-        blackPiece["blackPiece" + str(i)].draw()
-        whitePiece["whitePiece" + str(i)].draw()
+    for k, v in whitePiece.items():
+
+        v.draw()
 
     # If it's the user's turn, let the user play
     if turn == True:
@@ -270,10 +291,40 @@ def game():
                         # Debugging
                         print(closestSquare)
 
+                        movedList = blackPiece[selectedList[0]].checkerMove(closestSquare, spaces)
+
                         # If the user has moved, unselect their piece and set the turn to false (ends the turn)
-                        if blackPiece[selectedList[0]].checkerMove(closestSquare, spaces) == True:
+                        if movedList[0] == True:
+
+                            oldSquare = movedList[1]
+
+                            tempList = list(map(lambda x: x.seeSquare()[1], whitePiece.values()))
+                            tempList1 = list(map(lambda x: x.seeSquare()[0], whitePiece.values()))
+                            tempDict = dict(zip(tempList, tempList1))
+
+                            if closestSquare - oldSquare == 18:
+
+                                for k, v in tempDict.items():
+
+                                    if v == oldSquare + 9:
+
+                                        del whitePiece[k]
+
+                                        whitePieces -= 1
+
+                            elif closestSquare - oldSquare == 14:
+
+                                for k, v in tempDict.items():
+
+                                    if v == oldSquare + 7:
+
+                                        del whitePiece[k]
+
+                                        whitePieces -= 1
 
                             blackPiece[selectedList[0]].unselect(selectedList)
+
+                            
 
                             turn = False
 
@@ -283,9 +334,79 @@ def game():
         # Update the display
         pygame.display.update()
 
-        # AI code goes here
+        tempList = list(map(lambda x: x.enemyMoves()[1], whitePiece.values()))
+        tempList1 = list(map(lambda x: x.enemyMoves()[0], whitePiece.values()))
+        tempDict = dict(zip(tempList, tempList1))
 
-        # Ends the turn
+        print(tempDict)
+
+        noneCount = 0
+        piecesWithMoves = {}
+
+        for k, v in tempDict.items():
+
+            if v == ['None']:
+
+                noneCount += 1
+
+            else:
+
+                piecesWithMoves[k] = v
+        
+        tempList = list(map(lambda x: x.seeSquare()[1], blackPiece.values()))
+        tempList1 = list(map(lambda x: x.seeSquare()[0], blackPiece.values()))
+        tempDict = dict(zip(tempList, tempList1))
+
+        if piecesWithMoves:
+
+            print(list(piecesWithMoves.values()))
+
+            currentPiece = random.choice(list(piecesWithMoves.keys()))
+        
+            print(currentPiece)
+
+            enemyMoves0 = whitePiece[currentPiece].enemyMoves()
+
+            print(enemyMoves0)
+
+            enemyMove = random.choice(enemyMoves0[0])
+
+            print(enemyMove)
+
+            oldWhiteSquare = whitePiece[currentPiece].seeSquare()[0]
+
+            whitePiece[currentPiece].checkerMove(enemyMove, spaces)
+
+            newWhiteSquare = whitePiece[currentPiece].seeSquare()[0]
+
+            if oldWhiteSquare - newWhiteSquare == 18:
+
+                for k, v in tempDict.items():
+
+                    if v == newWhiteSquare + 9:
+
+                        del blackPiece[k]
+
+                        blackPieces -= 1
+
+            elif oldWhiteSquare - newWhiteSquare == 14:
+
+                for k, v in tempDict.items():
+
+                    if v == newWhiteSquare + 7:
+
+                        del blackPiece[k]
+
+                        blackPieces -= 1
+
+
+
+            
+
+        if noneCount == whitePieces:
+
+            scene = "win"
+        
         turn = True
         pass
 
@@ -339,6 +460,10 @@ while True:
         menu()
     elif scene == "game":
         game()
+    elif scene == "win":
+        win()
+    elif scene == "lose":
+        lose()
 
     # Stopping the program if pygame.event.get() returns pygame.QUIT
     for event in pygame.event.get():
