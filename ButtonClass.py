@@ -305,3 +305,7 @@ class Button:
     def seeSquare(self):
 
         return [self.square, self.name]
+
+    def changeCenter(self):
+
+        self.rect.center = (808 // 2, 608 // 4)

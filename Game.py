@@ -49,6 +49,13 @@ blackPieceImg = pygame.image.load("Resources/blackPiece.png").convert_alpha()
 blackPieceSelectImg = pygame.image.load("Resources/blackPieceSelect.jpg").convert_alpha()
 whitePieceImg = pygame.image.load("Resources/whitePiece.png").convert_alpha()
 highlightImg = pygame.image.load("Resources/highlight.jpg").convert_alpha()
+winImg = pygame.image.load("Resources/win.png").convert_alpha()
+menuImg = pygame.image.load("Resources/menuImg.png").convert_alpha()
+menuImgHover = pygame.image.load("Resources/menuImgHover.png").convert_alpha()
+playAgainImg = pygame.image.load("Resources/playAgainImg.png").convert_alpha()
+playAgainImgHover = pygame.image.load("Resources/playAgainImgHover.png").convert_alpha()
+exitImg = pygame.image.load("Resources/exitImg.png").convert_alpha()
+exitImgHover = pygame.image.load("Resources/exitImgHover.png").convert_alpha()
 
 '''
 optionsImg = pygame.image.load("options.png").convert_alpha()
@@ -58,6 +65,12 @@ backImg = pygame.image.load("back.png").convert_alpha()
 # Creating menu button instances
 playButton = Button(x / 2, y / 2, playImg, 0.4, display_surface)
 playButtonHover = Button(x / 2, y / 2, playImgHover, 0.5, display_surface)
+menuButton = Button(x / 2, y / 2, menuImg, 0.9, display_surface)
+menuButtonHover = Button(x / 2, y / 2, menuImgHover, 1, display_surface)
+playAgainButton = Button(x / 2, y // 2 + 100, playAgainImg, 0.9, display_surface)
+playAgainButtonHover = Button(x / 2, y // 2 + 100, playAgainImgHover, 1, display_surface)
+exitButton = Button(x / 2, y // 2 + 200, exitImg, 0.9, display_surface)
+exitButtonHover = Button(x / 2, y // 2 + 200, exitImgHover, 1, display_surface)
 
 # Defining font as Corbel with the size 72
 font = pygame.font.SysFont('Corbel', 72)
@@ -76,6 +89,8 @@ scene = "menu"
 
 # Defining the coordinates of the centers of the squares (Calculations were done in another file to conserve performance)
 spaces = {0: [142, 570], 1: [218, 570], 2: [294, 570], 3: [370, 570], 4: [446, 570], 5: [522, 570], 6: [598, 570], 7: [674, 570], 8: [142, 494], 9: [218, 494], 10: [294, 494], 11: [370, 494], 12: [446, 494], 13: [522, 494], 14: [598, 494], 15: [674, 494], 16: [142, 418], 17: [218, 418], 18: [294, 418], 19: [370, 418], 20: [446, 418], 21: [522, 418], 22: [598, 418], 23: [674, 418], 24: [142, 342], 25: [218, 342], 26: [294, 342], 27: [370, 342], 28: [446, 342], 29: [522, 342], 30: [598, 342], 31: [674, 342], 32: [142, 266], 33: [218, 266], 34: [294, 266], 35: [370, 266], 36: [446, 266], 37: [522, 266], 38: [598, 266], 39: [674, 266], 40: [142, 190], 41: [218, 190], 42: [294, 190], 43: [370, 190], 44: [446, 190], 45: [522, 190], 46: [598, 190], 47: [674, 190], 48: [142, 114], 49: [218, 114], 50: [294, 114], 51: [370, 114], 52: [446, 114], 53: [522, 114], 54: [598, 114], 55: [674, 114], 56: [142, 38], 57: [218, 38], 58: [294, 38], 59: [370, 38], 60: [446, 38], 61: [522, 38], 62: [598, 38], 63: [674, 38]}
+
+resetting = False
 
 def setupPieces():
     '''
@@ -200,7 +215,54 @@ def closest_node(node, nodes):
 
 def win():
 
-    print("You win!")
+    global scene
+    global resetting
+
+    winImgRect = pygame.Rect(0, 0, 400, 400)
+
+    winImgRect.center = (x // 2, y // 4)
+
+    display_surface.fill(ORANGE)
+
+    display_surface.blit(winImg, winImgRect)
+
+    # Draws the button onto the screen
+    menuButton.draw()
+    playAgainButton.draw()
+    exitButton.draw()
+
+    # If the play button is clicked, go to the game scene
+    if menuButton.click()[0] == True:
+        
+        scene = "menu"
+
+    if playAgainButton.click()[0] == True:
+
+        scene = "game"
+    
+    if exitButton.click()[0] == True:
+
+        exit()
+
+    # Hover animation
+    if menuButton.hover():
+
+        menuButton.erase(ORANGE)
+
+        menuButtonHover.draw()
+
+    if playAgainButton.hover():
+
+        playAgainButton.erase(ORANGE)
+
+        playAgainButtonHover.draw()
+    
+    if exitButton.hover():
+
+        exitButton.erase(ORANGE)
+
+        exitButtonHover.draw()
+
 
 def lose():
 
@@ -216,6 +278,18 @@ def game():
     global whitePieces
     global blackPieces
     global scene
+    global resetting
+    global whitePiece
+    global blackPiece
+
+    if resetting:
+
+        setupList = setupPieces()
+        blackPiece = setupList[0]
+        whitePiece = setupList[1]
+        whitePieces = 12
+        blackPieces = 12
+
 
     # Sets the background to orange
     display_surface.fill(ORANGE)
