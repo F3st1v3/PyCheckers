@@ -6,6 +6,7 @@ Description: Simulates checkers
 '''
 
 # Importing modules
+from select import select
 import pygame
 from ButtonClass import *
 from copy import deepcopy
@@ -56,6 +57,9 @@ playAgainImg = pygame.image.load("Resources/playAgainImg.png").convert_alpha()
 playAgainImgHover = pygame.image.load("Resources/playAgainImgHover.png").convert_alpha()
 exitImg = pygame.image.load("Resources/exitImg.png").convert_alpha()
 exitImgHover = pygame.image.load("Resources/exitImgHover.png").convert_alpha()
+blackPieceKingImg = pygame.image.load("Resources/blackPieceKingImg.png").convert_alpha()
+blackPieceKingImgSelect = pygame.image.load("Resources/blackPieceKingImgSelect.png").convert_alpha()
+whitePieceKingImg = pygame.image.load("Resources/whitePieceKingImg.png").convert_alpha()
 
 '''
 optionsImg = pygame.image.load("options.png").convert_alpha()
@@ -111,7 +115,7 @@ def setupPieces():
 
     # Creating black pieces for row 1
     for i in range(0, 8, 2):
-        blackPiece.append(Button(spaces[i][0], spaces[i][1], blackPieceImg, 1, display_surface, highlightImg, False, "blackPiece{0}".format(piece), True, square, spaces))
+        blackPiece.append(Button(spaces[i][0], spaces[i][1], blackPieceImg, 1, display_surface, highlightImg, blackPieceKingImg, "blackPiece{0}".format(piece), True, square, spaces, blackPieceSelectImg, blackPieceKingImgSelect))
         j += 1
         piece += 1
         square += 2
@@ -122,7 +126,7 @@ def setupPieces():
 
     # Creating black pieces for row 2
     for i in range(9, 17, 2):
-        blackPiece.append(Button(spaces[i][0], spaces[i][1], blackPieceImg, 1,  display_surface, highlightImg, False, "blackPiece{0}".format(piece), True, square, spaces))
+        blackPiece.append(Button(spaces[i][0], spaces[i][1], blackPieceImg, 1,  display_surface, highlightImg, blackPieceKingImg, "blackPiece{0}".format(piece), True, square, spaces, blackPieceSelectImg, blackPieceKingImgSelect))
         j += 1
         piece += 1
         square += 2
@@ -133,7 +137,7 @@ def setupPieces():
 
     # Creating black pieces for row 3
     for i in range(16, 24, 2):
-        blackPiece.append(Button(spaces[i][0], spaces[i][1], blackPieceImg, 1, display_surface, highlightImg, False, "blackPiece{0}".format(piece), True, square, spaces))
+        blackPiece.append(Button(spaces[i][0], spaces[i][1], blackPieceImg, 1, display_surface, highlightImg, blackPieceKingImg, "blackPiece{0}".format(piece), True, square, spaces, blackPieceSelectImg, blackPieceKingImgSelect))
         j += 1
         piece += 1
         square += 2
@@ -148,7 +152,7 @@ def setupPieces():
 
     # Creating white pieces for row 6
     for i in range(41, 48, 2):
-        whitePiece.append(Button(spaces[i][0], spaces[i][1], whitePieceImg, 1, display_surface, None, False, "whitePiece{0}".format(piece), True, i, spaces))
+        whitePiece.append(Button(spaces[i][0], spaces[i][1], whitePieceImg, 1, display_surface, None, whitePieceKingImg, "whitePiece{0}".format(piece), True, i, spaces))
         j += 1
         piece += 1
 
@@ -157,7 +161,7 @@ def setupPieces():
 
     # Creating white pieces for row 7
     for i in range(48, 56, 2):
-        whitePiece.append(Button(spaces[i][0], spaces[i][1], whitePieceImg, 1, display_surface, None, False, "whitePiece{0}".format(piece), True, i, spaces))
+        whitePiece.append(Button(spaces[i][0], spaces[i][1], whitePieceImg, 1, display_surface, None, whitePieceKingImg, "whitePiece{0}".format(piece), True, i, spaces))
         j += 1
         piece += 1
 
@@ -166,7 +170,7 @@ def setupPieces():
 
     # Creating white pieces for row 8
     for i in range(57, 64, 2):
-        whitePiece.append(Button(spaces[i][0], spaces[i][1], whitePieceImg, 1, display_surface, None, False, "whitePiece{0}".format(piece), True, i, spaces))
+        whitePiece.append(Button(spaces[i][0], spaces[i][1], whitePieceImg, 1, display_surface, None, whitePieceKingImg, "whitePiece{0}".format(piece), True, i, spaces))
         j += 1
         piece += 1
 
@@ -291,6 +295,14 @@ def game():
         blackPieces = 12
 
 
+    for i in blackPiece.values():
+
+        i.kingCheck()
+
+    for i in whitePiece.values():
+
+        i.kingCheck()
+
     # Sets the background to orange
     display_surface.fill(ORANGE)
 
@@ -343,7 +355,7 @@ def game():
 
                                 blackPiece[selectedList[0]].unselect(selectedList)
 
-                            blackPiece[key].select(blackPieceSelectImg, selectedList)
+                            blackPiece[key].select(selectedList)
         
         # Highlights the moves the user's selected piece can do
         if selectedList:
@@ -395,6 +407,28 @@ def game():
                                         del whitePiece[k]
 
                                         whitePieces -= 1
+
+                            if blackPiece[selectedList[0]].isKing():
+
+                                if oldSquare - closestSquare == 18:
+
+                                    for k, v in tempDict.items():
+
+                                        if v == oldSquare - 9:
+
+                                            del whitePiece[k]
+
+                                            whitePieces -= 1
+
+                                elif oldSquare - closestSquare == 14:
+
+                                    for k, v in tempDict.items():
+
+                                        if v == oldSquare - 7:
+
+                                            del whitePiece[k]
+
+                                            whitePieces -= 1
 
                             blackPiece[selectedList[0]].unselect(selectedList)
 
