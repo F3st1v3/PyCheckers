@@ -209,27 +209,29 @@ class Button:
             # If the square is on the left column
             if (self.square + 8) % 8 == 0:
                 
-                # If the piece's only valid move is on an empty square, highlight that square
-                if self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (253, 231, 70):
+                if self.square < 55:
+
+                    # If the piece's only valid move is on an empty square, highlight that square
+                    if self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (253, 231, 70):
                     
-                    highlightRect.center = self.squareDict[self.square + 9]
+                        highlightRect.center = self.squareDict[self.square + 9]
 
-                    self.surface.blit(self.highlight, highlightRect)
+                        self.surface.blit(self.highlight, highlightRect)
 
-                # Or, if the user's only move is on an enemy square, check if the enemy's piece can be captured, and display that as an option
-                elif self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (255, 255, 255):
+                if self.square < 46:
 
-                    if self.square < 46:
+                    # Or, if the user's only move is on an enemy square, check if the enemy's piece can be captured, and display that as an option
+                    if self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (255, 255, 255):
 
-                        if self.surface.get_at((self.squareDict[self.square + 18][0], self.squareDict[self.square + 18][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 18][0], self.squareDict[self.square + 18][1]))[:3] == (253, 231, 70):
+                            if self.surface.get_at((self.squareDict[self.square + 18][0], self.squareDict[self.square + 18][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 18][0], self.squareDict[self.square + 18][1]))[:3] == (253, 231, 70):
 
-                            highlightRect.center = self.squareDict[self.square + 18]
+                                highlightRect.center = self.squareDict[self.square + 18]
 
-                            self.surface.blit(self.highlight, highlightRect)
+                                self.surface.blit(self.highlight, highlightRect)
 
                 if self.king == True:
 
-                    if self.square > 7:
+                    if self.square > 6:
 
                         # If the piece's only valid move is on an empty square, highlight that square
                         if self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (253, 231, 70):
@@ -241,7 +243,7 @@ class Button:
                         # Or, if the user's only move is on an enemy square, check if the enemy's piece can be captured, and display that as an option
                         elif self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (255, 255, 255):
 
-                            if self.square > 15:
+                            if self.square > 13:
 
                                 if self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (253, 231, 70):
 
@@ -252,15 +254,17 @@ class Button:
             # If the square is on the right column
             elif (self.square + 1) % 8 == 0:
                 
-                if self.surface.get_at((self.squareDict[self.square + 7][0], self.squareDict[self.square + 7][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 7][0], self.squareDict[self.square + 7][1]))[:3] == (253, 231, 70):
+                if self.square < 57:
+
+                    if self.surface.get_at((self.squareDict[self.square + 7][0], self.squareDict[self.square + 7][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 7][0], self.squareDict[self.square + 7][1]))[:3] == (253, 231, 70):
                     
-                    highlightRect.center = self.squareDict[self.square + 7]
+                        highlightRect.center = self.squareDict[self.square + 7]
 
-                    self.surface.blit(self.highlight, highlightRect)
+                        self.surface.blit(self.highlight, highlightRect)
 
-                elif self.surface.get_at((self.squareDict[self.square + 7][0], self.squareDict[self.square + 7][1]))[:3] == (255, 255, 255):
+                if self.square < 50:
 
-                    if self.square < 49:
+                    if self.surface.get_at((self.squareDict[self.square + 7][0], self.squareDict[self.square + 7][1]))[:3] == (255, 255, 255):
 
                         if self.surface.get_at((self.squareDict[self.square + 14][0], self.squareDict[self.square + 14][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 14][0], self.squareDict[self.square + 14][1]))[:3] == (253, 231, 70):
 
@@ -270,7 +274,7 @@ class Button:
 
                 if self.king == True:
 
-                    if self.square > 7:
+                    if self.square > 8:
 
                         # If the piece's only valid move is on an empty square, highlight that square
                         if self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (253, 231, 70):
@@ -279,7 +283,7 @@ class Button:
 
                             self.surface.blit(self.highlight, highlightRect)
 
-                    if self.square > 23:
+                    if self.square > 17:
 
                         # Or, if the user's only move is on an enemy square, check if the enemy's piece can be captured, and display that as an option
                         if self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (255, 255, 255):
@@ -372,55 +376,130 @@ class Button:
 
         if (self.square + 8) % 8 == 0:
 
-            if self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (253, 231, 70):
+            if self.square > 6:
 
-                choices.append(self.square - 7)
+                if self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (253, 231, 70):
 
-            elif self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (0, 0, 0):
+                    choices.append(self.square - 7)
+
+            if self.square > 13:
+
+                if self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (0, 0, 0):
             
-                if self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (253, 231, 70):
+                    if self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (253, 231, 70):
                     
-                    choices.append(self.square - 14)
-                
+                        choices.append(self.square - 14)
             
+            if self.king == True:
 
-            pass
+                if self.square < 55:
+
+                    if self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (253, 231, 70):
+                    
+                        choices.append(self.square + 9)
+
+                if self.square < 46:
+
+                    # Or, if the user's only move is on an enemy square, check if the enemy's piece can be captured, and display that as an option
+                    if self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (0, 0, 0):
+
+                        if self.surface.get_at((self.squareDict[self.square + 18][0], self.squareDict[self.square + 18][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 18][0], self.squareDict[self.square + 18][1]))[:3] == (253, 231, 70):
+
+                            choices.append(self.square + 18)
+                
 
         elif (self.square + 1) % 8 == 0:
 
-            if self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (253, 231, 70):
+            if self.square > 8:
 
-                choices.append(self.square - 9)
+                if self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (253, 231, 70):
 
-            elif self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (0, 0, 0):
+                    choices.append(self.square - 9)
+
+            if self.square > 17:
+
+                if self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (0, 0, 0):
             
-                if self.surface.get_at((self.squareDict[self.square - 18][0], self.squareDict[self.square - 18][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 18][0], self.squareDict[self.square - 18][1]))[:3] == (253, 231, 70):
+                    if self.surface.get_at((self.squareDict[self.square - 18][0], self.squareDict[self.square - 18][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 18][0], self.squareDict[self.square - 18][1]))[:3] == (253, 231, 70):
                     
-                    choices.append(self.square - 18)
+                        choices.append(self.square - 18)
+            
+            if self.king == True:
 
-            pass
+                if self.square < 57:
+
+                    if self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (253, 231, 70):
+
+                        choices.append(self.square - 7)
+
+                if self.square < 50:
+
+                    if self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (0, 0, 0):
+            
+                        if self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (253, 231, 70):
+                    
+                            choices.append(self.square - 14)
 
         else:
 
-            if self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (253, 231, 70):
+            if self.square > 6:
 
-                choices.append(self.square - 7)
+                if self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (253, 231, 70):
 
-            elif self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (0, 0, 0):
+                    choices.append(self.square - 7)
+
+            if self.square > 13:
             
-                if self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (253, 231, 70):
+                if self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (0, 0, 0):
+            
+                    if self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (253, 231, 70):
                     
-                    choices.append(self.square - 14)
+                        choices.append(self.square - 14)
             
-            if self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (253, 231, 70):
+            if self.square > 8:
 
-                choices.append(self.square - 9)
+                if self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (253, 231, 70):
 
-            elif self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (0, 0, 0):
+                    choices.append(self.square - 9)
+
+            if self.square > 17:
+
+                if self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (0, 0, 0):
             
-                if self.surface.get_at((self.squareDict[self.square - 18][0], self.squareDict[self.square - 18][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 18][0], self.squareDict[self.square - 18][1]))[:3] == (253, 231, 70):
+                    if self.surface.get_at((self.squareDict[self.square - 18][0], self.squareDict[self.square - 18][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 18][0], self.squareDict[self.square - 18][1]))[:3] == (253, 231, 70):
                     
-                    choices.append(self.square - 18)
+                        choices.append(self.square - 18)
+
+            if self.king == True:
+
+                if self.square < 55:
+
+                    if self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (253, 231, 70):
+                    
+                        choices.append(self.square + 9)
+
+                if self.square < 46:
+
+                    # Or, if the user's only move is on an enemy square, check if the enemy's piece can be captured, and display that as an option
+                    if self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (0, 0, 0):
+
+                        if self.surface.get_at((self.squareDict[self.square + 18][0], self.squareDict[self.square + 18][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 18][0], self.squareDict[self.square + 18][1]))[:3] == (253, 231, 70):
+
+                            choices.append(self.square + 18)
+                
+                if self.square < 57:
+
+                    if self.surface.get_at((self.squareDict[self.square + 7][0], self.squareDict[self.square + 7][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 7][0], self.squareDict[self.square + 7][1]))[:3] == (253, 231, 70):
+
+                        choices.append(self.square + 7)
+
+                if self.square < 50:
+
+                    if self.surface.get_at((self.squareDict[self.square + 7][0], self.squareDict[self.square + 7][1]))[:3] == (0, 0, 0):
+            
+                        if self.surface.get_at((self.squareDict[self.square + 14][0], self.squareDict[self.square + 14][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 14][0], self.squareDict[self.square + 14][1]))[:3] == (253, 231, 70):
+                    
+                            choices.append(self.square + 14)
 
         if not choices:
 

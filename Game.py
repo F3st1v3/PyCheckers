@@ -6,6 +6,7 @@ Description: Simulates checkers
 '''
 
 # Importing modules
+from hashlib import new
 from select import select
 import pygame
 from ButtonClass import *
@@ -483,9 +484,13 @@ def game():
 
             oldWhiteSquare = whitePiece[currentPiece].seeSquare()[0]
 
+            print(str(oldWhiteSquare) + " = " + " old square")
+
             whitePiece[currentPiece].checkerMove(enemyMove, spaces)
 
             newWhiteSquare = whitePiece[currentPiece].seeSquare()[0]
+
+            print(str(newWhiteSquare) + " = " + " new square")
 
             if oldWhiteSquare - newWhiteSquare == 18:
 
@@ -506,10 +511,41 @@ def game():
                         del blackPiece[k]
 
                         blackPieces -= 1
-
-
-
             
+            if whitePiece[currentPiece].isKing() == True:
+
+                if newWhiteSquare - oldWhiteSquare == 18:
+
+                    print("Working")
+
+                    for k, v in tempDict.items():
+
+                        if v == newWhiteSquare - 9:
+
+                            del blackPiece[k]
+
+                            blackPieces -= 1
+                else:
+
+                    print("Not working")
+
+                if newWhiteSquare - oldWhiteSquare == 14:
+
+                    print("working")
+
+                    for k, v in tempDict.items():
+
+                        if v == newWhiteSquare - 7:
+
+                            del blackPiece[k]
+
+                            blackPieces -= 1
+                else:
+
+                    print("not working")
+            else:
+
+                print("whyyyyy")
 
         if noneCount == whitePieces:
 
