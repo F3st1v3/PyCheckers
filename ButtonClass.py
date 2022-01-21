@@ -7,11 +7,12 @@ Description: A class for buttons used in the main program. I seperated the files
 # Imports pygame (Needs to be imported to work properly)
 import pygame
 
-
 # Defines the Button class
 class Button:
     def __init__(self, x, y, image, scale, surface, highlight = None, kingImage=False, name="None", checkerPiece=False, square=10, squareDict=False, selectedImg = False, kingSelectedImg = False):
-        
+        '''
+        initializing the button
+        '''
         width = image.get_width()
         height = image.get_height()
         self.image = pygame.transform.scale(image, (int(width * scale), int(height * scale)))
@@ -36,31 +37,41 @@ class Button:
             self.kingImage = kingImage
 
     def getPixelColour(self, square):
+        '''
+        Gets the pixel colour at a given square
+
+        returns the pixel's colour
+        '''
 
         return self.surface.get_at((self.squareDict[square][0], self.squareDict[square][1]))[:3]
 
     def draw(self):
-        
+        '''
+        Draws the button onto the screen
+        '''
            
-            # Draw button
-            self.surface.blit(self.image, (self.rect.x, self.rect.y))
+        # Draw button
+        self.surface.blit(self.image, (self.rect.x, self.rect.y))
 
     def hover(self):
+        '''
+        Detects when the cursor is hovering over a button
+        '''
+        hover = False
 
+        # Getting the mouse position
+        pos = pygame.mouse.get_pos()
 
-            hover = False
-
-            # Getting the mouse position
-            pos = pygame.mouse.get_pos()
-
-            if self.rect.collidepoint(pos):
+        if self.rect.collidepoint(pos):
             
-                hover = True
+            hover = True
         
-            return hover
+        return hover
     
     def erase(self, colour):
-
+        '''
+        "Erases" a button
+        '''
         height = self.imageDimensions[1]
         width = self.imageDimensions[0]
         center = self.rect.center
@@ -72,7 +83,9 @@ class Button:
         pygame.draw.rect(self.surface, colour, tempRect)
         
     def move(self, colour, x, y):
-
+        '''
+        Moves the button
+        '''
         self.erase(colour)
 
         self.oldrectcenter = self.rect.center
@@ -82,7 +95,9 @@ class Button:
         self.draw()
 
     def kingCheck(self):
-
+        '''
+        Checks if the piece is supposed to be a king or not, then makes them one if they are
+        '''
         if self.name[0] == "b":
 
             if self.square > 55:
@@ -104,7 +119,9 @@ class Button:
                     self.image = self.kingImage
             
     def click(self):
-
+        '''
+        Detects if the button gets clicked
+        '''
         action = False
         #hover = False
 
@@ -128,7 +145,9 @@ class Button:
         return [action, name]
         
     def select(self, list):
-
+        '''
+        "Selects" a checker piece
+        '''
         self.oldimage = self.image
 
         if self.king == True:
@@ -145,14 +164,18 @@ class Button:
         list.append(self.name)
     
     def unselect(self, list):
-
+        '''
+        Unselects a selected checker piece
+        '''
         self.image = self.oldimage
         self.selected = False
 
         list.clear()
 
     def is_collide(self, x, y):
-
+        '''
+        Checks if a button is colliding with a given tuple of coordinates
+        '''
         if self.rect.collidepoint((x, y)) == True:
 
             return [True, self.name]
@@ -162,7 +185,9 @@ class Button:
             return [False, self.name]
 
     def checkerMove(self, square, dict):
-
+        '''
+        Moves a checker piece to a given square
+        '''
         if square % 2 == 0:
 
             colour = (151, 77, 0)
@@ -196,7 +221,11 @@ class Button:
             return [True, oldSquare]
     
     def checkerMoves(self, silent):
+        '''
+        Checks or highlights the possible moves of the black pieces
 
+        if silent is True it returns the possible moves and the button's name
+        '''
         choices = []
 
         if self.selected == True or silent == True:
@@ -471,7 +500,11 @@ class Button:
         return [choices, self.name]
 
     def enemyMoves(self):
+        '''
+        Checks the possible moves a piece has
 
+        returns the possible moves and the piece's name
+        '''
         choices = []
 
         if (self.square + 8) % 8 == 0:
@@ -608,15 +641,21 @@ class Button:
         return [choices, self.name]
 
     def seeSquare(self):
-
+        '''
+        returns the button's square and name
+        '''
         return [self.square, self.name]
 
     def changeCenter(self):
-
+        '''
+        Changes the play button's rect's center
+        '''
         self.rect.center = (808 // 2, 608 // 4)
 
     def isKing(self):
-
+        '''
+        Checks if a piece is a king or not
+        '''
         if self.king == True:
 
             return True

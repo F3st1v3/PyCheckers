@@ -6,7 +6,6 @@ Description: Simulates checkers
 '''
 
 # Importing modules
-import re
 import time
 import pygame
 from ButtonClass import *
@@ -403,9 +402,6 @@ def game():
 
             scene = "lose"
 
-        # Declaring noMoves as a list. It stores the piece names without moves
-        noMoves = []
-
         # Checks if the pieces have moves or not, and appends them to noMoves if they don't
         tempList = list(map(lambda x: x.checkerMoves(True)[1], blackPiece.values()))
         tempList1 = list(map(lambda x: x.checkerMoves(True)[0], blackPiece.values()))
@@ -567,10 +563,12 @@ def game():
 
                 piecesWithMoves[k] = v
         
+        # Gets the squares of the black pieces and puts it into a dictionary with the piece names
         tempList = list(map(lambda x: x.seeSquare()[1], blackPiece.values()))
         tempList1 = list(map(lambda x: x.seeSquare()[0], blackPiece.values()))
         tempDict = dict(zip(tempList, tempList1))
 
+        # If there are pieces with moves, choose a random piece and a random move, then move it
         if piecesWithMoves:
 
             currentPiece = random.choice(list(piecesWithMoves.keys()))
@@ -584,6 +582,8 @@ def game():
             whitePiece[currentPiece].checkerMove(enemyMove, spaces)
 
             newWhiteSquare = whitePiece[currentPiece].seeSquare()[0]
+
+            # Checking if a piece should be captured or not after the white piece moves
 
             if oldWhiteSquare - newWhiteSquare == 18:
 
@@ -627,12 +627,14 @@ def game():
 
                             blackPieces -= 1
 
+        # If no white pieces can move, change to the win scene
         if noneCount == whitePieces:
 
             time.sleep(0.1)
 
             scene = "win"
         
+        # Ends the turn
         turn = True
 
         
