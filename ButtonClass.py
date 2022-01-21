@@ -238,7 +238,7 @@ class Button:
                 if self.square < 55:
 
                     # If the piece's only valid move is on an empty square, highlight that square
-                    if self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (253, 231, 70):
+                    if self.getPixelColour(self.square + 9) == (151, 77, 0):
 
                         if silent == False:
 
@@ -254,9 +254,9 @@ class Button:
                 if self.square < 46:
 
                     # Or, if the user's only move is on an enemy square, check if the enemy's piece can be captured, and display that as an option
-                    if self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (255, 255, 255):
+                    if self.getPixelColour(self.square + 9) == (255, 255, 255):
 
-                            if self.surface.get_at((self.squareDict[self.square + 18][0], self.squareDict[self.square + 18][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 18][0], self.squareDict[self.square + 18][1]))[:3] == (253, 231, 70):
+                            if self.getPixelColour(self.square + 18) == (151, 77, 0):
 
                                 if silent == False:
 
@@ -273,7 +273,7 @@ class Button:
                     if self.square > 6:
 
                         # If the piece's only valid move is on an empty square, highlight that square
-                        if self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (253, 231, 70):
+                        if self.getPixelColour(self.square - 7) == (151, 77, 0):
 
                             if silent == False:
 
@@ -286,11 +286,11 @@ class Button:
                                 choices.append("choice")
 
                         # Or, if the user's only move is on an enemy square, check if the enemy's piece can be captured, and display that as an option
-                        elif self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (255, 255, 255):
+                        elif self.getPixelColour(self.square - 7) == (255, 255, 255):
 
                             if self.square > 13:
 
-                                if self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (253, 231, 70):
+                                if self.getPixelColour(self.square - 14) == (151, 77, 0):
 
                                     if silent == False:
                                         
@@ -307,7 +307,7 @@ class Button:
                 
                 if self.square < 57:
 
-                    if self.surface.get_at((self.squareDict[self.square + 7][0], self.squareDict[self.square + 7][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 7][0], self.squareDict[self.square + 7][1]))[:3] == (253, 231, 70):
+                    if self.getPixelColour(self.square + 7) == (151, 77, 0):
                     
                         if silent == False:
 
@@ -321,9 +321,9 @@ class Button:
 
                 if self.square < 50:
 
-                    if self.surface.get_at((self.squareDict[self.square + 7][0], self.squareDict[self.square + 7][1]))[:3] == (255, 255, 255):
+                    if self.getPixelColour(self.square + 7) == (255, 255, 255):
 
-                        if self.surface.get_at((self.squareDict[self.square + 14][0], self.squareDict[self.square + 14][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 14][0], self.squareDict[self.square + 14][1]))[:3] == (253, 231, 70):
+                        if self.getPixelColour(self.square + 14) == (151, 77, 0):
 
                             if silent == False:
 
@@ -340,7 +340,7 @@ class Button:
                     if self.square > 8:
 
                         # If the piece's only valid move is on an empty square, highlight that square
-                        if self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (253, 231, 70):
+                        if self.getPixelColour(self.square - 9) == (151, 77, 0):
                     
                             if silent == False:
                                 
@@ -355,9 +355,9 @@ class Button:
                     if self.square > 17:
 
                         # Or, if the user's only move is on an enemy square, check if the enemy's piece can be captured, and display that as an option
-                        if self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (255, 255, 255):
+                        if self.getPixelColour(self.square - 9) == (255, 255, 255):
 
-                                if self.surface.get_at((self.squareDict[self.square - 18][0], self.squareDict[self.square - 18][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 18][0], self.squareDict[self.square - 18][1]))[:3] == (253, 231, 70):
+                                if self.getPixelColour(self.square - 18) == (151, 77, 0):
 
                                     if silent == False:
 
@@ -373,7 +373,7 @@ class Button:
                 
                 if self.square < 57:
 
-                    if self.surface.get_at((self.squareDict[self.square + 7][0], self.squareDict[self.square + 7][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 7][0], self.squareDict[self.square + 7][1]))[:3] == (253, 231, 70):
+                    if self.getPixelColour(self.square + 7) == (151, 77, 0):
 
                         if silent == False:
 
@@ -387,7 +387,7 @@ class Button:
 
                 if self.square < 55:
 
-                    if self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (253, 231, 70):    
+                    if self.getPixelColour(self.square + 9) == (151, 77, 0):
 
                         if silent == False:
 
@@ -401,9 +401,9 @@ class Button:
 
                 if self.square < 46:
 
-                    if self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (255, 255, 255):
+                    if self.getPixelColour(self.square + 9) == (255, 255, 255):
                     
-                        if self.surface.get_at((self.squareDict[self.square + 18][0], self.squareDict[self.square + 18][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 18][0], self.squareDict[self.square + 18][1]))[:3] == (253, 231, 70):
+                        if self.getPixelColour(self.square + 18) == (151, 77, 0):
 
                             if silent == False:
                             
@@ -417,9 +417,9 @@ class Button:
 
                 if self.square < 50:
 
-                    if self.surface.get_at((self.squareDict[self.square + 7][0], self.squareDict[self.square + 7][1]))[:3] == (255, 255, 255):
+                    if self.getPixelColour(self.square + 7) == (255, 255, 255):
 
-                        if self.surface.get_at((self.squareDict[self.square + 14][0], self.squareDict[self.square + 14][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 14][0], self.squareDict[self.square + 14][1]))[:3] == (253, 231, 70):
+                        if self.getPixelColour(self.square + 14) == (151, 77, 0):
 
                             if silent == False:
 
@@ -435,7 +435,7 @@ class Button:
 
                     if self.square > 6:
 
-                        if self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (253, 231, 70):
+                        if self.getPixelColour(self.square - 7) == (151, 77, 0):
 
                             if silent == False:
 
@@ -449,7 +449,7 @@ class Button:
 
                     if self.square > 8:
 
-                        if self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (253, 231, 70):    
+                        if self.getPixelColour(self.square - 9) == (151, 77, 0):    
 
                             if silent == False:
 
@@ -463,9 +463,9 @@ class Button:
 
                     if self.square > 17:
 
-                        if self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (255, 255, 255):
+                        if self.getPixelColour(self.square - 9) == (255, 255, 255):
                     
-                            if self.surface.get_at((self.squareDict[self.square - 18][0], self.squareDict[self.square - 18][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 18][0], self.squareDict[self.square - 18][1]))[:3] == (253, 231, 70):
+                            if self.getPixelColour(self.square - 18) == (151, 77, 0):
 
                                 if silent == False:    
 
@@ -479,9 +479,9 @@ class Button:
 
                     if self.square > 13:
 
-                        if self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (255, 255, 255):
+                        if self.getPixelColour(self.square - 7) == (255, 255, 255):
                     
-                            if self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (253, 231, 70):
+                            if self.getPixelColour(self.square - 14) == (151, 77, 0):
 
                                 if silent == False:
 
@@ -511,15 +511,15 @@ class Button:
 
             if self.square > 6:
 
-                if self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (253, 231, 70):
+                if self.getPixelColour(self.square - 7) == (151, 77, 0):
 
                     choices.append(self.square - 7)
 
             if self.square > 13:
 
-                if self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (0, 0, 0):
+                if self.getPixelColour(self.square - 7) == (0, 0, 0):
             
-                    if self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (253, 231, 70):
+                    if self.getPixelColour(self.square - 14) == (151, 77, 0):
                     
                         choices.append(self.square - 14)
             
@@ -527,16 +527,16 @@ class Button:
 
                 if self.square < 55:
 
-                    if self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (253, 231, 70):
+                    if self.getPixelColour(self.square + 9) == (151, 77, 0):
                     
                         choices.append(self.square + 9)
 
                 if self.square < 46:
 
                     # Or, if the user's only move is on an enemy square, check if the enemy's piece can be captured, and display that as an option
-                    if self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (0, 0, 0):
+                    if self.getPixelColour(self.square + 9) == (0, 0, 0):
 
-                        if self.surface.get_at((self.squareDict[self.square + 18][0], self.squareDict[self.square + 18][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 18][0], self.squareDict[self.square + 18][1]))[:3] == (253, 231, 70):
+                        if self.getPixelColour(self.square + 18) == (151, 77, 0):
 
                             choices.append(self.square + 18)
                 
@@ -545,15 +545,15 @@ class Button:
 
             if self.square > 8:
 
-                if self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (253, 231, 70):
+                if self.getPixelColour(self.square - 9) == (151, 77, 0):
 
                     choices.append(self.square - 9)
 
             if self.square > 17:
 
-                if self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (0, 0, 0):
+                if self.getPixelColour(self.square - 9) == (0, 0, 0):
             
-                    if self.surface.get_at((self.squareDict[self.square - 18][0], self.squareDict[self.square - 18][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 18][0], self.squareDict[self.square - 18][1]))[:3] == (253, 231, 70):
+                    if self.getPixelColour(self.square - 18) == (151, 77, 0):
                     
                         choices.append(self.square - 18)
             
@@ -561,15 +561,15 @@ class Button:
 
                 if self.square < 57:
 
-                    if self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (253, 231, 70):
+                    if self.getPixelColour(self.square - 7) == (151, 77, 0):
 
                         choices.append(self.square - 7)
 
                 if self.square < 50:
 
-                    if self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (0, 0, 0):
+                    if self.getPixelColour(self.square - 7) == (0, 0, 0):
             
-                        if self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (253, 231, 70):
+                        if self.getPixelColour(self.square - 14) == (151, 77, 0):
                     
                             choices.append(self.square - 14)
 
@@ -577,29 +577,29 @@ class Button:
 
             if self.square > 6:
 
-                if self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (253, 231, 70):
+                if self.getPixelColour(self.square - 7) == (151, 77, 0):
 
                     choices.append(self.square - 7)
 
             if self.square > 13:
             
-                if self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (0, 0, 0):
+                if self.getPixelColour(self.square - 7) == (0, 0, 0):
             
-                    if self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (253, 231, 70):
+                    if self.getPixelColour(self.square - 14) == (151, 77, 0):
                     
                         choices.append(self.square - 14)
             
             if self.square > 8:
 
-                if self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (253, 231, 70):
+                if self.getPixelColour(self.square - 9) == (151, 77, 0):
 
                     choices.append(self.square - 9)
 
             if self.square > 17:
 
-                if self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (0, 0, 0):
+                if self.getPixelColour(self.square - 9) == (0, 0, 0):
             
-                    if self.surface.get_at((self.squareDict[self.square - 18][0], self.squareDict[self.square - 18][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 18][0], self.squareDict[self.square - 18][1]))[:3] == (253, 231, 70):
+                    if self.getPixelColour(self.square - 18) == (151, 77, 0):
                     
                         choices.append(self.square - 18)
 
@@ -607,30 +607,30 @@ class Button:
 
                 if self.square < 55:
 
-                    if self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (253, 231, 70):
+                    if self.getPixelColour(self.square + 9) == (151, 77, 0):
                     
                         choices.append(self.square + 9)
 
                 if self.square < 46:
 
                     # Or, if the user's only move is on an enemy square, check if the enemy's piece can be captured, and display that as an option
-                    if self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (0, 0, 0):
+                    if self.getPixelColour(self.square + 9) == (0, 0, 0):
 
-                        if self.surface.get_at((self.squareDict[self.square + 18][0], self.squareDict[self.square + 18][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 18][0], self.squareDict[self.square + 18][1]))[:3] == (253, 231, 70):
+                        if self.getPixelColour(self.square + 18) == (151, 77, 0):
 
                             choices.append(self.square + 18)
                 
                 if self.square < 57:
 
-                    if self.surface.get_at((self.squareDict[self.square + 7][0], self.squareDict[self.square + 7][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 7][0], self.squareDict[self.square + 7][1]))[:3] == (253, 231, 70):
+                    if self.getPixelColour(self.square + 7) == (151, 77, 0):
 
                         choices.append(self.square + 7)
 
                 if self.square < 50:
 
-                    if self.surface.get_at((self.squareDict[self.square + 7][0], self.squareDict[self.square + 7][1]))[:3] == (0, 0, 0):
+                    if self.getPixelColour(self.square + 7) == (0, 0, 0):
             
-                        if self.surface.get_at((self.squareDict[self.square + 14][0], self.squareDict[self.square + 14][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 14][0], self.squareDict[self.square + 14][1]))[:3] == (253, 231, 70):
+                        if self.getPixelColour(self.square + 14) == (151, 77, 0):
                     
                             choices.append(self.square + 14)
 
@@ -642,7 +642,7 @@ class Button:
 
     def seeSquare(self):
         '''
-        returns the button's square and name
+        returns the utton's square and name
         '''
         return [self.square, self.name]
 

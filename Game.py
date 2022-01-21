@@ -65,12 +65,12 @@ whitePieceKingImg = pygame.image.load("Resources/whitePieceKingImg.png").convert
 # Creating menu button instances
 playButton = Button(x / 2, y / 2, playImg, 0.4, display_surface)
 playButtonHover = Button(x / 2, y / 2, playImgHover, 0.5, display_surface)
-menuButton = Button(x / 2, y / 2, menuImg, 0.9, display_surface)
-menuButtonHover = Button(x / 2, y / 2, menuImgHover, 1, display_surface)
-playAgainButton = Button(x / 2, y // 2 + 100, playAgainImg, 0.9, display_surface)
-playAgainButtonHover = Button(x / 2, y // 2 + 100, playAgainImgHover, 1, display_surface)
-exitButton = Button(x / 2, y // 2 + 200, exitImg, 0.9, display_surface)
-exitButtonHover = Button(x / 2, y // 2 + 200, exitImgHover, 1, display_surface)
+menuButton = Button(x / 2, y / 2, menuImg, 1, display_surface)
+menuButtonHover = Button(x / 2, y / 2, menuImgHover, 1.1, display_surface)
+playAgainButton = Button(x / 2, y // 2 + 115, playAgainImg, 1, display_surface)
+playAgainButtonHover = Button(x / 2, y // 2 + 115, playAgainImgHover, 1.1, display_surface)
+exitButton = Button(x / 2, y // 2 + 230, exitImg, 1, display_surface)
+exitButtonHover = Button(x / 2, y // 2 + 230, exitImgHover, 1.1, display_surface)
 
 # Defining font as Corbel with the size 72
 font = pygame.font.SysFont('Corbel', 72)
@@ -398,7 +398,7 @@ def game():
         # If there are no black pieces left, the user loses
         if not blackPiece:
 
-            time.sleep(0.1)
+            time.sleep(0.25)
 
             scene = "lose"
 
@@ -630,7 +630,7 @@ def game():
         # If no white pieces can move, change to the win scene
         if noneCount == whitePieces:
 
-            time.sleep(0.1)
+            time.sleep(0.25)
 
             scene = "win"
         
