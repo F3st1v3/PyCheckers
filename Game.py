@@ -7,6 +7,7 @@ Description: Simulates checkers
 
 # Importing modules
 import re
+import time
 import pygame
 from ButtonClass import *
 from copy import deepcopy
@@ -398,23 +399,33 @@ def game():
         # If there are no black pieces left, the user loses
         if not blackPiece:
 
+            time.sleep(0.1)
+
             scene = "lose"
 
         # Declaring noMoves as a list. It stores the piece names without moves
         noMoves = []
 
         # Checks if the pieces have moves or not, and appends them to noMoves if they don't
-        for k, v in blackPiece.items():
-
-            if v.checkerMoves(True):
-
-                noMoves.append(k)
+        tempList = list(map(lambda x: x.checkerMoves(True)[1], blackPiece.values()))
+        tempList1 = list(map(lambda x: x.checkerMoves(True)[0], blackPiece.values()))
+        tempDict = dict(zip(tempList, tempList1))
         
         # If the same amount of pieces have no moves as the amount of pieces that exist (If all pieces have no moves), the user loses
-        if len(noMoves) == len(blackPiece.items()):
+        noneCount = 0
+        piecesWithMoves = {}
 
-            print(len(noMoves))
-            print(len(blackPiece.items()))
+        for k, v in tempDict.items():
+
+            if v == ['None']:
+
+                noneCount += 1
+
+            else:
+
+                piecesWithMoves[k] = v
+
+        if noneCount == blackPieces:
 
             scene = "lose"
 
@@ -617,6 +628,8 @@ def game():
                             blackPieces -= 1
 
         if noneCount == whitePieces:
+
+            time.sleep(0.1)
 
             scene = "win"
         

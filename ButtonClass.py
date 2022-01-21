@@ -217,7 +217,7 @@ class Button:
 
                             self.surface.blit(self.highlight, highlightRect)
                         
-                        if silent == True:
+                        elif silent == True:
 
                             choices.append("choice")
                         
@@ -464,13 +464,11 @@ class Button:
 
                                     choices.append("choice")
         
-        if choices:
+        if not choices:
 
-            return True
+            choices.append("None")
         
-        else:
-            
-            return False
+        return [choices, self.name]
 
     def enemyMoves(self):
 
