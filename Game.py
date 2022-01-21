@@ -6,8 +6,7 @@ Description: Simulates checkers
 '''
 
 # Importing modules
-from hashlib import new
-from select import select
+import re
 import pygame
 from ButtonClass import *
 from copy import deepcopy
@@ -52,6 +51,7 @@ blackPieceSelectImg = pygame.image.load("Resources/blackPieceSelect.jpg").conver
 whitePieceImg = pygame.image.load("Resources/whitePiece.png").convert_alpha()
 highlightImg = pygame.image.load("Resources/highlight.jpg").convert_alpha()
 winImg = pygame.image.load("Resources/win.png").convert_alpha()
+loseImg = pygame.image.load("Resources/lose.png").convert_alpha()
 menuImg = pygame.image.load("Resources/menuImg.png").convert_alpha()
 menuImgHover = pygame.image.load("Resources/menuImgHover.png").convert_alpha()
 playAgainImg = pygame.image.load("Resources/playAgainImg.png").convert_alpha()
@@ -61,11 +61,6 @@ exitImgHover = pygame.image.load("Resources/exitImgHover.png").convert_alpha()
 blackPieceKingImg = pygame.image.load("Resources/blackPieceKingImg.png").convert_alpha()
 blackPieceKingImgSelect = pygame.image.load("Resources/blackPieceKingImgSelect.png").convert_alpha()
 whitePieceKingImg = pygame.image.load("Resources/whitePieceKingImg.png").convert_alpha()
-
-'''
-optionsImg = pygame.image.load("options.png").convert_alpha()
-backImg = pygame.image.load("back.png").convert_alpha()
-'''
 
 # Creating menu button instances
 playButton = Button(x / 2, y / 2, playImg, 0.4, display_surface)
@@ -80,7 +75,7 @@ exitButtonHover = Button(x / 2, y // 2 + 200, exitImgHover, 1, display_surface)
 # Defining font as Corbel with the size 72
 font = pygame.font.SysFont('Corbel', 72)
 
-# Defining img as the rendered text "Checkers" in brown
+# Defining img as the rendered text "Checkers" in brown (Title sequence)
 img = font.render("Checkers", True, BROWN)
 
 # Defining imgRect as img's rect
@@ -89,12 +84,13 @@ imgRect = img.get_rect()
 # Setting the center of imgRect
 imgRect.center = (x // 2, y // 4)
 
-# Setting the default scene to menu
+# Setting the default scene to menu. Because of this, the first page the user sees is the menu.
 scene = "menu"
 
 # Defining the coordinates of the centers of the squares (Calculations were done in another file to conserve performance)
 spaces = {0: [142, 570], 1: [218, 570], 2: [294, 570], 3: [370, 570], 4: [446, 570], 5: [522, 570], 6: [598, 570], 7: [674, 570], 8: [142, 494], 9: [218, 494], 10: [294, 494], 11: [370, 494], 12: [446, 494], 13: [522, 494], 14: [598, 494], 15: [674, 494], 16: [142, 418], 17: [218, 418], 18: [294, 418], 19: [370, 418], 20: [446, 418], 21: [522, 418], 22: [598, 418], 23: [674, 418], 24: [142, 342], 25: [218, 342], 26: [294, 342], 27: [370, 342], 28: [446, 342], 29: [522, 342], 30: [598, 342], 31: [674, 342], 32: [142, 266], 33: [218, 266], 34: [294, 266], 35: [370, 266], 36: [446, 266], 37: [522, 266], 38: [598, 266], 39: [674, 266], 40: [142, 190], 41: [218, 190], 42: [294, 190], 43: [370, 190], 44: [446, 190], 45: [522, 190], 46: [598, 190], 47: [674, 190], 48: [142, 114], 49: [218, 114], 50: [294, 114], 51: [370, 114], 52: [446, 114], 53: [522, 114], 54: [598, 114], 55: [674, 114], 56: [142, 38], 57: [218, 38], 58: [294, 38], 59: [370, 38], 60: [446, 38], 61: [522, 38], 62: [598, 38], 63: [674, 38]}
 
+# Defining resetting as a False bool. This is variable determines whether the game should reset or not.
 resetting = False
 
 def setupPieces():
@@ -109,7 +105,7 @@ def setupPieces():
     blackPiece = []
     blackPieceIndex = []
 
-    # Setting j (counter) to 0
+    # Setting the counters to 0
     j = 0
     piece = 0
     square = 0
@@ -195,6 +191,7 @@ whitePiece = setupList[1]
 # Defining turn as True as the user starts first
 turn = True
 
+# Setting the black and white piece counts to 12
 blackPieces = 12
 whitePieces = 12
 
@@ -202,7 +199,6 @@ whitePieces = 12
 selectedList = []
 
 # Declaring possibleEnemyMoves as a list
-
 possibleEnemyMoves = []
 
 def closest_node(node, nodes):
@@ -211,24 +207,32 @@ def closest_node(node, nodes):
 
     returns the closest node
     '''
+    
+    # Making sure nodes is a tuple
     nodes = tuple(nodes)
-
     nodes = np.asarray(nodes)
     deltas = nodes - node
     dist_2 = np.einsum('ij,ij->i', deltas, deltas)
+    
     return np.argmin(dist_2)
 
 def win():
+    '''
+    Creates the win scene
+    '''
 
+    # Accessing global variables
     global scene
     global resetting
 
+    # Defining the win image
     winImgRect = pygame.Rect(0, 0, 400, 400)
-
     winImgRect.center = (x // 2, y // 4)
 
+    # Setting the backgroud to orange
     display_surface.fill(ORANGE)
 
+    # Displays the win image on screen
     display_surface.blit(winImg, winImgRect)
 
     # Draws the button onto the screen
@@ -236,32 +240,38 @@ def win():
     playAgainButton.draw()
     exitButton.draw()
 
-    # If the play button is clicked, go to the game scene
+    # If the menu button is clicked, go to the menu scene
     if menuButton.click()[0] == True:
         
+        resetting = True
         scene = "menu"
 
+    # If the play again button is clicked, go to the game scene
     if playAgainButton.click()[0] == True:
 
+        resetting = True
         scene = "game"
     
+    # If the exit button is clicked, close the program
     if exitButton.click()[0] == True:
 
         exit()
 
-    # Hover animation
+    # Hover animation for the menu button
     if menuButton.hover():
 
         menuButton.erase(ORANGE)
 
         menuButtonHover.draw()
 
+    # Hover animation for the menu button
     if playAgainButton.hover():
 
         playAgainButton.erase(ORANGE)
 
         playAgainButtonHover.draw()
     
+    # Hove animation for the exit button
     if exitButton.hover():
 
         exitButton.erase(ORANGE)
@@ -270,8 +280,69 @@ def win():
 
 
 def lose():
+    '''
+    Creates the lose scene
+    '''
 
-    print("You lose!")
+
+    # Accessing global variables
+    global scene
+    global resetting
+
+    # Defining the lose image
+    loseImgRect = pygame.Rect(0, 0, 400, 400)
+    loseImgRect.center = (x // 2, y // 4)
+
+    # Setting the background to orange
+    display_surface.fill(ORANGE)
+
+    # Draws the lose image
+    display_surface.blit(loseImg, loseImgRect)
+
+    # Draws the button onto the screen
+    menuButton.draw()
+    playAgainButton.draw()
+    exitButton.draw()
+
+    # If the menu button is clicked, go to the menu scene
+    if menuButton.click()[0] == True:
+        
+        resetting = True
+        
+        scene = "menu"
+
+    # If the play again button is clicked, go to the game scene
+    if playAgainButton.click()[0] == True:
+
+        resetting = True
+
+        scene = "game"
+    
+    # If the exit button is clicked, exit the game
+    if exitButton.click()[0] == True:
+
+        exit()
+
+    # Hover animation for the menu button
+    if menuButton.hover():
+
+        menuButton.erase(ORANGE)
+
+        menuButtonHover.draw()
+
+    # Hove animation for the play again button
+    if playAgainButton.hover():
+
+        playAgainButton.erase(ORANGE)
+
+        playAgainButtonHover.draw()
+    
+    # Hover animation for the exit button
+    if exitButton.hover():
+
+        exitButton.erase(ORANGE)
+
+        exitButtonHover.draw()
 
 def game():
     '''
@@ -287,6 +358,7 @@ def game():
     global whitePiece
     global blackPiece
 
+    # If the game should reset, it resets
     if resetting:
 
         setupList = setupPieces()
@@ -294,12 +366,14 @@ def game():
         whitePiece = setupList[1]
         whitePieces = 12
         blackPieces = 12
+        resetting = False
 
-
+    # Updates king values for all black pieces
     for i in blackPiece.values():
 
         i.kingCheck()
 
+    # Updates king values for all white pieces
     for i in whitePiece.values():
 
         i.kingCheck()
@@ -314,13 +388,35 @@ def game():
     for k, v in blackPiece.items():
 
         v.draw()
-        
     for k, v in whitePiece.items():
 
         v.draw()
 
-    # If it's the user's turn, let the user play
+    # If it's the user's turn, let the user make a move
     if turn == True:
+
+        # If there are no black pieces left, the user loses
+        if not blackPiece:
+
+            scene = "lose"
+
+        # Declaring noMoves as a list. It stores the piece names without moves
+        noMoves = []
+
+        # Checks if the pieces have moves or not, and appends them to noMoves if they don't
+        for k, v in blackPiece.items():
+
+            if v.checkerMoves(True):
+
+                noMoves.append(k)
+        
+        # If the same amount of pieces have no moves as the amount of pieces that exist (If all pieces have no moves), the user loses
+        if len(noMoves) == len(blackPiece.items()):
+
+            print(len(noMoves))
+            print(len(blackPiece.items()))
+
+            scene = "lose"
 
         # Get the events of the user every frame
         event = pygame.event.poll()
@@ -352,16 +448,19 @@ def game():
                         # Selects the piece that the user clicked on
                         for key in blackPieceRectDictDC.keys():
 
+                            # Unselects the selected piece before selecing the next one
                             if selectedList:
 
                                 blackPiece[selectedList[0]].unselect(selectedList)
 
+                            # Selects the next piece
                             blackPiece[key].select(selectedList)
         
         # Highlights the moves the user's selected piece can do
         if selectedList:
 
-                        blackPiece[selectedList[0]].checkerMoves()
+            # highlights the moves for the selected piece
+            blackPiece[selectedList[0]].checkerMoves(False)
 
         # If the user clicks again, it checks to see if they selected a valid square to move to
         if event.type == pygame.MOUSEBUTTONDOWN:            
@@ -374,9 +473,6 @@ def game():
 
                         # Uses a list comprehension to get the closest square
                         closestSquare = [k for k, v in spaces.items() if v == spaces[closestSquareCoord]][0]
-
-                        # Debugging
-                        print(closestSquare)
 
                         movedList = blackPiece[selectedList[0]].checkerMove(closestSquare, spaces)
 
@@ -447,8 +543,6 @@ def game():
         tempList1 = list(map(lambda x: x.enemyMoves()[0], whitePiece.values()))
         tempDict = dict(zip(tempList, tempList1))
 
-        print(tempDict)
-
         noneCount = 0
         piecesWithMoves = {}
 
@@ -468,29 +562,17 @@ def game():
 
         if piecesWithMoves:
 
-            print(list(piecesWithMoves.values()))
-
             currentPiece = random.choice(list(piecesWithMoves.keys()))
-        
-            print(currentPiece)
 
             enemyMoves0 = whitePiece[currentPiece].enemyMoves()
 
-            print(enemyMoves0)
-
             enemyMove = random.choice(enemyMoves0[0])
 
-            print(enemyMove)
-
             oldWhiteSquare = whitePiece[currentPiece].seeSquare()[0]
-
-            print(str(oldWhiteSquare) + " = " + " old square")
 
             whitePiece[currentPiece].checkerMove(enemyMove, spaces)
 
             newWhiteSquare = whitePiece[currentPiece].seeSquare()[0]
-
-            print(str(newWhiteSquare) + " = " + " new square")
 
             if oldWhiteSquare - newWhiteSquare == 18:
 
@@ -516,8 +598,6 @@ def game():
 
                 if newWhiteSquare - oldWhiteSquare == 18:
 
-                    print("Working")
-
                     for k, v in tempDict.items():
 
                         if v == newWhiteSquare - 9:
@@ -525,13 +605,8 @@ def game():
                             del blackPiece[k]
 
                             blackPieces -= 1
-                else:
-
-                    print("Not working")
 
                 if newWhiteSquare - oldWhiteSquare == 14:
-
-                    print("working")
 
                     for k, v in tempDict.items():
 
@@ -540,19 +615,12 @@ def game():
                             del blackPiece[k]
 
                             blackPieces -= 1
-                else:
-
-                    print("not working")
-            else:
-
-                print("whyyyyy")
 
         if noneCount == whitePieces:
 
             scene = "win"
         
         turn = True
-        pass
 
         
 

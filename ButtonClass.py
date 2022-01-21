@@ -5,7 +5,6 @@ Program name: ButtonClass
 Description: A class for buttons used in the main program. I seperated the files to make it more clear.
 '''
 # Imports pygame (Needs to be imported to work properly)
-from re import A
 import pygame
 
 
@@ -178,8 +177,6 @@ class Button:
         self.rect.center = self.oldrectcenter
         self.draw()
 
-        print(self.surface.get_at((dict[square][0], dict[square][1]))[:3])
-
         # self.move(colour, dict[square][0], dict[square][1])
 
         if self.name[0] == "b" and self.surface.get_at((dict[square][0], dict[square][1]))[:3] == (253, 231, 70) or self.name[0] == "w":
@@ -190,8 +187,6 @@ class Button:
 
             self.square = square
 
-        print(self.square)
-
         if self.rect.center == self.oldrectcenter:
 
             return [False]
@@ -200,9 +195,11 @@ class Button:
             
             return [True, oldSquare]
     
-    def checkerMoves(self):
+    def checkerMoves(self, silent):
 
-        if self.selected == True:
+        choices = []
+
+        if self.selected == True or silent == True:
 
             highlightRect = pygame.Rect(0, 0, 76, 76)
 
@@ -213,10 +210,17 @@ class Button:
 
                     # If the piece's only valid move is on an empty square, highlight that square
                     if self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (253, 231, 70):
-                    
-                        highlightRect.center = self.squareDict[self.square + 9]
 
-                        self.surface.blit(self.highlight, highlightRect)
+                        if silent == False:
+
+                            highlightRect.center = self.squareDict[self.square + 9]
+
+                            self.surface.blit(self.highlight, highlightRect)
+                        
+                        if silent == True:
+
+                            choices.append("choice")
+                        
 
                 if self.square < 46:
 
@@ -225,9 +229,15 @@ class Button:
 
                             if self.surface.get_at((self.squareDict[self.square + 18][0], self.squareDict[self.square + 18][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 18][0], self.squareDict[self.square + 18][1]))[:3] == (253, 231, 70):
 
-                                highlightRect.center = self.squareDict[self.square + 18]
+                                if silent == False:
 
-                                self.surface.blit(self.highlight, highlightRect)
+                                    highlightRect.center = self.squareDict[self.square + 18]
+
+                                    self.surface.blit(self.highlight, highlightRect)
+
+                                elif silent == True:
+
+                                    choices.append("choice")
 
                 if self.king == True:
 
@@ -236,9 +246,15 @@ class Button:
                         # If the piece's only valid move is on an empty square, highlight that square
                         if self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (253, 231, 70):
 
-                            highlightRect.center = self.squareDict[self.square - 7]
+                            if silent == False:
 
-                            self.surface.blit(self.highlight, highlightRect)
+                                highlightRect.center = self.squareDict[self.square - 7]
+
+                                self.surface.blit(self.highlight, highlightRect)
+
+                            elif silent == True:
+
+                                choices.append("choice")
 
                         # Or, if the user's only move is on an enemy square, check if the enemy's piece can be captured, and display that as an option
                         elif self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (255, 255, 255):
@@ -247,9 +263,15 @@ class Button:
 
                                 if self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (253, 231, 70):
 
-                                    highlightRect.center = self.squareDict[self.square - 14]
+                                    if silent == False:
+                                        
+                                        highlightRect.center = self.squareDict[self.square - 14]
 
-                                    self.surface.blit(self.highlight, highlightRect)
+                                        self.surface.blit(self.highlight, highlightRect)
+
+                                    elif silent == True:
+
+                                        choices.append("choice")
 
             # If the square is on the right column
             elif (self.square + 1) % 8 == 0:
@@ -258,9 +280,15 @@ class Button:
 
                     if self.surface.get_at((self.squareDict[self.square + 7][0], self.squareDict[self.square + 7][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 7][0], self.squareDict[self.square + 7][1]))[:3] == (253, 231, 70):
                     
-                        highlightRect.center = self.squareDict[self.square + 7]
+                        if silent == False:
 
-                        self.surface.blit(self.highlight, highlightRect)
+                            highlightRect.center = self.squareDict[self.square + 7]
+
+                            self.surface.blit(self.highlight, highlightRect)
+
+                        elif silent == True:
+
+                            choices.append("choice")
 
                 if self.square < 50:
 
@@ -268,9 +296,15 @@ class Button:
 
                         if self.surface.get_at((self.squareDict[self.square + 14][0], self.squareDict[self.square + 14][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 14][0], self.squareDict[self.square + 14][1]))[:3] == (253, 231, 70):
 
-                            highlightRect.center = self.squareDict[self.square + 14]
+                            if silent == False:
 
-                            self.surface.blit(self.highlight, highlightRect)
+                                highlightRect.center = self.squareDict[self.square + 14]
+
+                                self.surface.blit(self.highlight, highlightRect)
+
+                            elif silent == True:
+
+                                choices.append("choice")
 
                 if self.king == True:
 
@@ -279,9 +313,15 @@ class Button:
                         # If the piece's only valid move is on an empty square, highlight that square
                         if self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (253, 231, 70):
                     
-                            highlightRect.center = self.squareDict[self.square - 9]
+                            if silent == False:
+                                
+                                highlightRect.center = self.squareDict[self.square - 9]
 
-                            self.surface.blit(self.highlight, highlightRect)
+                                self.surface.blit(self.highlight, highlightRect)
+
+                            elif silent == True:
+
+                                choices.append("choice")
 
                     if self.square > 17:
 
@@ -290,9 +330,15 @@ class Button:
 
                                 if self.surface.get_at((self.squareDict[self.square - 18][0], self.squareDict[self.square - 18][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 18][0], self.squareDict[self.square - 18][1]))[:3] == (253, 231, 70):
 
-                                    highlightRect.center = self.squareDict[self.square - 18]
+                                    if silent == False:
 
-                                    self.surface.blit(self.highlight, highlightRect)
+                                        highlightRect.center = self.squareDict[self.square - 18]
+
+                                        self.surface.blit(self.highlight, highlightRect)
+
+                                    elif silent == True:
+
+                                        choices.append("choice")
 
             else:
                 
@@ -300,17 +346,29 @@ class Button:
 
                     if self.surface.get_at((self.squareDict[self.square + 7][0], self.squareDict[self.square + 7][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 7][0], self.squareDict[self.square + 7][1]))[:3] == (253, 231, 70):
 
-                        highlightRect.center = self.squareDict[self.square + 7]
+                        if silent == False:
 
-                        self.surface.blit(self.highlight, highlightRect)
+                            highlightRect.center = self.squareDict[self.square + 7]
+
+                            self.surface.blit(self.highlight, highlightRect)
                 
+                        elif silent == True:
+
+                            choices.append("choice")
+
                 if self.square < 55:
 
                     if self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 9][0], self.squareDict[self.square + 9][1]))[:3] == (253, 231, 70):    
 
-                        highlightRect.center = self.squareDict[self.square + 9]
+                        if silent == False:
 
-                        self.surface.blit(self.highlight, highlightRect)
+                            highlightRect.center = self.squareDict[self.square + 9]
+
+                            self.surface.blit(self.highlight, highlightRect)
+
+                        elif silent == True:
+
+                            choices.append("choice")
 
                 if self.square < 46:
 
@@ -318,9 +376,15 @@ class Button:
                     
                         if self.surface.get_at((self.squareDict[self.square + 18][0], self.squareDict[self.square + 18][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 18][0], self.squareDict[self.square + 18][1]))[:3] == (253, 231, 70):
 
-                            highlightRect.center = self.squareDict[self.square + 18]
+                            if silent == False:
+                            
+                                highlightRect.center = self.squareDict[self.square + 18]
+                            
+                                self.surface.blit(self.highlight, highlightRect)
 
-                            self.surface.blit(self.highlight, highlightRect)
+                            elif silent == True:
+
+                                choices.append("choice")
 
                 if self.square < 50:
 
@@ -328,47 +392,85 @@ class Button:
 
                         if self.surface.get_at((self.squareDict[self.square + 14][0], self.squareDict[self.square + 14][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square + 14][0], self.squareDict[self.square + 14][1]))[:3] == (253, 231, 70):
 
-                            highlightRect.center = self.squareDict[self.square + 14]
+                            if silent == False:
 
-                            self.surface.blit(self.highlight, highlightRect)
+                                highlightRect.center = self.squareDict[self.square + 14]
+
+                                self.surface.blit(self.highlight, highlightRect)
                 
+                            elif silent == True:
+
+                                choices.append("choice")
+
                 if self.king == True:
 
                     if self.square > 6:
 
                         if self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (253, 231, 70):
 
-                            highlightRect.center = self.squareDict[self.square - 7]
+                            if silent == False:
 
-                            self.surface.blit(self.highlight, highlightRect)
+                                highlightRect.center = self.squareDict[self.square - 7]
+
+                                self.surface.blit(self.highlight, highlightRect)
+
+                            elif silent == True:
+
+                                choices.append("choice")
 
                     if self.square > 8:
 
                         if self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (253, 231, 70):    
 
-                            highlightRect.center = self.squareDict[self.square - 9]
+                            if silent == False:
 
-                            self.surface.blit(self.highlight, highlightRect)
+                                highlightRect.center = self.squareDict[self.square - 9]
+
+                                self.surface.blit(self.highlight, highlightRect)
                     
+                            elif silent == True:
+
+                                choices.append("choice")
+
                     if self.square > 17:
 
                         if self.surface.get_at((self.squareDict[self.square - 9][0], self.squareDict[self.square - 9][1]))[:3] == (255, 255, 255):
                     
                             if self.surface.get_at((self.squareDict[self.square - 18][0], self.squareDict[self.square - 18][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 18][0], self.squareDict[self.square - 18][1]))[:3] == (253, 231, 70):
 
-                                highlightRect.center = self.squareDict[self.square - 18]
+                                if silent == False:    
 
-                                self.surface.blit(self.highlight, highlightRect)
+                                    highlightRect.center = self.squareDict[self.square - 18]
+
+                                    self.surface.blit(self.highlight, highlightRect)
                     
+                                elif silent == True:
+
+                                    choices.append("choice")
+
                     if self.square > 13:
 
                         if self.surface.get_at((self.squareDict[self.square - 7][0], self.squareDict[self.square - 7][1]))[:3] == (255, 255, 255):
                     
                             if self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (151, 77, 0) or self.surface.get_at((self.squareDict[self.square - 14][0], self.squareDict[self.square - 14][1]))[:3] == (253, 231, 70):
 
-                                highlightRect.center = self.squareDict[self.square - 14]
+                                if silent == False:
 
-                                self.surface.blit(self.highlight, highlightRect)
+                                    highlightRect.center = self.squareDict[self.square - 14]
+
+                                    self.surface.blit(self.highlight, highlightRect)
+
+                                elif silent == True:
+
+                                    choices.append("choice")
+        
+        if choices:
+
+            return True
+        
+        else:
+            
+            return False
 
     def enemyMoves(self):
 
